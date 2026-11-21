@@ -1,0 +1,1091 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="color-scheme" content="light dark" />
+<link rel="icon" href="data:," />
+<title>狗格测试 · 你家狗是哪种狗格？</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&display=swap" rel="stylesheet" />
+<style>
+:root {
+--bg: #fff6e9;
+--card: #fffdf8;
+--ink: #2e2118;
+--ink-soft: #6f5d4c;
+--line: #f0dfc8;
+--coral: #ff6b4a;
+--coral-dark: #e5502f;
+--teal: #1f9d8a;
+--sun: #ffc53d;
+--pink: #ff8fab;
+--gold: #b07d10;
+--shadow: 0 10px 30px rgba(120, 72, 20,.14);
+color-scheme: light dark;
+}
+@media (prefers-color-scheme: dark) {
+:root {
+--bg: #1d1712;
+--card: #2a211a;
+--ink: #f7ead9;
+--ink-soft: #c9b299;
+--line: #453628;
+--shadow: 0 10px 30px rgba(0, 0, 0,.45);
+}
+}
+* { box-sizing: border-box;}
+html, body { margin: 0; padding: 0;}
+body {
+background: var(--bg);
+color: var(--ink);
+font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+-webkit-font-smoothing: antialiased;
+}
+button, input { min-height: 44px; font: inherit;}
+.wrap { max-width: 430px; margin: 0 auto; padding: 18px 16px 40px;}
+.display { font-family: "ZCOOL KuaiLe", -apple-system, "PingFang SC", sans-serif; font-weight: 400;}
+.screen { display: none;}
+.screen.on { display: block; animation: pop.35s ease both;}
+@keyframes pop { from { opacity: 0; transform: translateY(10px);} to { opacity: 1; transform: none;}}
+@media (prefers-reduced-motion: reduce) {.screen.on { animation: none;}}
+
+/* ---------- Landing ---------- */
+.hero-dog { display: block; width: 168px; margin: 6px auto 2px;}
+h1.title { text-align: center; font-size: 44px; margin: 4px 0 2px; letter-spacing: 2px;}
+h1.title.accent { color: var(--coral);}
+.subtitle { text-align: center; color: var(--ink-soft); font-size: 15px; margin: 6px 0 18px; line-height: 1.6;}
+.type-strip { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; margin: 0 0 14px;}
+.type-strip span {
+font-size: 12px; padding: 5px 10px; border-radius: 999px;
+background: var(--card); border: 1.5px dashed var(--line); color: var(--ink-soft);
+}
+.hidden-hook {
+text-align: center; font-size: 13.5px; color: var(--gold); font-weight: 700;
+background: linear-gradient(90deg, rgba(255,197,61,.12), rgba(255,197,61,.3), rgba(255,197,61,.12));
+border: 1.5px dashed var(--sun); border-radius: 999px; padding: 9px 14px; margin: 0 0 20px; line-height: 1.5;
+}
+.card {
+background: var(--card); border: 2px solid var(--line); border-radius: 20px;
+padding: 20px 18px; box-shadow: var(--shadow);
+}
+label.f-label { display: block; font-size: 14px; font-weight: 700; margin: 0 0 8px;}
+label.f-label.opt { font-weight: 400; color: var(--ink-soft); font-size: 12px;}
+.f-input {
+width: 100%; border: 2px solid var(--line); border-radius: 14px; padding: 12px 14px;
+font-size: 17px; background: transparent; color: var(--ink); outline: none;
+}
+.f-input:focus { border-color: var(--coral);}
+.f-row { margin-bottom: 16px;}
+.f-hint { font-size: 12px; color: var(--ink-soft); margin-top: 6px; line-height: 1.5;}
+.btn {
+display: block; width: 100%; border: none; cursor: pointer; border-radius: 999px;
+background: var(--coral); color: #fff; font-size: 18px; padding: 13px 20px;
+font-family: "ZCOOL KuaiLe", -apple-system, "PingFang SC", sans-serif; letter-spacing: 2px;
+box-shadow: 0 6px 0 var(--coral-dark); transition: transform.08s, box-shadow.08s;
+}
+.btn:active { transform: translateY(4px); box-shadow: 0 2px 0 var(--coral-dark);}
+.btn.ghost {
+background: var(--card); color: var(--ink); border: 2px solid var(--line);
+box-shadow: none; font-size: 15px; letter-spacing: 1px;
+}
+.btn.teal { background: var(--teal); box-shadow: 0 6px 0 #157766;}
+.btn.teal:active { box-shadow: 0 2px 0 #157766;}
+.btn.sun { background: var(--sun); color: #4a3200; box-shadow: 0 6px 0 #d9a514;}
+.btn.sun:active { box-shadow: 0 2px 0 #d9a514;}
+.err { display: none; color: var(--coral-dark); font-size: 13px; margin: -6px 0 12px;}
+.err.on { display: block;}
+.how { margin-top: 18px;}
+.how h3 { margin: 0 0 10px; font-size: 16px;}
+.how ol { margin: 0; padding-left: 20px; color: var(--ink-soft); font-size: 14px; line-height: 1.9;}
+.foot-note { text-align: center; color: var(--ink-soft); font-size: 12px; margin-top: 22px; line-height: 1.7;}
+
+/* ---------- Quiz ---------- */
+.q-top { display: flex; align-items: center; gap: 12px; margin: 8px 0 6px;}
+.q-count { font-size: 14px; font-weight: 700; white-space: nowrap;}
+.q-count b { color: var(--coral); font-size: 20px;}
+.bone-wrap { margin: 2px 0 16px;}
+.bone-track {
+position: relative; height: 30px; border-radius: 999px; background: var(--line);
+overflow: hidden;
+}
+.bone-fill {
+position: absolute; left: 0; top: 0; bottom: 0; width: 0;
+background: repeating-linear-gradient(45deg, var(--sun) 0 14px, #ffd873 14px 28px);
+border-radius: 999px; transition: width.35s ease;
+}
+.bone-emoji {
+position: absolute; top: 50%; transform: translate(-50%, -50%);
+font-size: 22px; line-height: 1; transition: left.35s ease; filter: drop-shadow(0 2px 2px rgba(90,55,20,.3));
+}
+.bone-label { display: flex; justify-content: space-between; font-size: 12px; color: var(--ink-soft); margin-top: 6px;}
+.bone-label b { color: var(--gold);}
+.q-dim { display: inline-block; font-size: 12px; font-weight: 700; color: var(--teal); border: 1.5px solid var(--teal); padding: 4px 10px; border-radius: 999px; margin-bottom: 12px;}
+.q-text { font-size: 21px; line-height: 1.55; margin: 0 0 20px; font-weight: 700;}
+.opt-btn {
+display: block; width: 100%; text-align: left; cursor: pointer; margin-bottom: 12px;
+background: var(--card); border: 2px solid var(--line); border-radius: 16px;
+padding: 16px; font-size: 16px; line-height: 1.55; color: var(--ink);
+}
+.opt-btn:active { border-color: var(--coral); background: rgba(255, 107, 74,.08);}
+.opt-btn.ab {
+display: inline-block; font-family: "ZCOOL KuaiLe", sans-serif; color: var(--coral);
+margin-right: 8px; font-size: 17px;
+}
+.opt-btn.opt-c { border-style: dashed;}
+.opt-btn.opt-c.ab { color: var(--gold);}
+.opt-btn.opt-c:active { border-color: var(--sun); background: rgba(255, 197, 61,.12);}
+.opt-btn.c-tag { font-size: 11px; font-weight: 700; color: var(--gold); border: 1px solid var(--sun); border-radius: 999px; padding: 1px 7px; margin-left: 6px; vertical-align: 2px; white-space: nowrap;}
+.q-back { background: none; border: none; color: var(--ink-soft); font-size: 14px; cursor: pointer; padding: 10px 4px; min-height: 44px;}
+
+/* ---------- Calculating ---------- */
+.calc { text-align: center; padding: 70px 0;}
+.calc.paw { font-size: 54px; display: inline-block; animation: bounce 0.7s ease infinite alternate;}
+@keyframes bounce { from { transform: translateY(0) rotate(-8deg);} to { transform: translateY(-14px) rotate(8deg);}}
+@media (prefers-reduced-motion: reduce) {.calc.paw { animation: none;}}
+.calc p { color: var(--ink-soft); font-size: 16px; margin-top: 14px;}
+
+/* ---------- Result card (3:4, PawtimeResultCard SVG) ---------- */
+.poster-card {
+border-radius: 18px; overflow: hidden; border: 2px solid #292625;
+box-shadow: var(--shadow); background: #fff9ee; line-height: 0;
+}
+.poster-card svg { width: 100%; height: auto; display: block;}
+.result-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px;}
+.result-actions .btn { font-size: 16px; padding: 12px 8px;}
+.btn.xhs { background: #ff2442; box-shadow: 0 6px 0 #c81e35;}
+.btn.xhs:active { box-shadow: 0 2px 0 #c81e35;}
+.share-note { text-align: center; font-size: 12px; color: var(--ink-soft); margin-top: 9px; line-height: 1.6;}
+.locked-note { text-align: center; font-size: 12.5px; color: var(--ink-soft); margin-top: 10px; line-height: 1.6;}
+
+/* ---------- Result detail (below poster, not exported) ---------- */
+.detail-card {
+background: var(--card); border: 2px solid var(--line); border-radius: 20px;
+padding: 16px 18px; box-shadow: var(--shadow); margin-top: 16px;
+}
+.detail-card h3 { margin: 0 0 10px; font-size: 16px;}
+.tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px;}
+.tags span { font-size: 12.5px; background: #fff1de; border: 1.5px solid #f0dfc8; color: #8a6a45; padding: 5px 10px; border-radius: 999px;}
+.detail-desc { font-size: 14.5px; line-height: 1.75; color: var(--ink); margin: 0;}
+.extra-box { border-top: 1.5px dashed var(--line); padding-top: 12px; margin-top: 14px;}
+.extra-box h4 { margin: 0 0 8px; font-size: 13px; color: #a07a52; letter-spacing: 1px;}
+.mate-row { font-size: 13.5px; line-height: 1.65; color: var(--ink-soft); margin: 0 0 8px;}
+.mate-row:last-child { margin-bottom: 0;}
+.mate-row b { color: var(--ink);}
+.mate-row .mate-code { color: var(--coral-dark); font-weight: 800;}
+.detail-card .stars .off { color: #e6d9bd;}
+
+/* ---------- Poster image modal ---------- */
+.img-modal {
+position: fixed; inset: 0; z-index: 90; display: none;
+background: rgba(22, 13, 6,.92); padding: 22px 16px; overflow-y: auto;
+}
+.img-modal.on { display: flex; flex-direction: column; align-items: center; justify-content: center;}
+.img-modal img {
+width: min(92vw, 430px); height: auto; border-radius: 14px; display: block;
+box-shadow: 0 18px 50px rgba(0,0,0,.5);
+}
+.img-modal .m-hint { color: #ffe9c9; font-size: 15px; font-weight: 700; margin: 16px 0 4px; text-align: center;}
+.img-modal .m-sub { color: rgba(255,233,201,.75); font-size: 12.5px; margin: 0 0 14px; text-align: center; line-height: 1.6;}
+.img-modal .m-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: min(92vw, 430px);}
+.img-modal .m-actions .btn { text-align: center; text-decoration: none; font-size: 16px; padding: 12px 8px;}
+
+/* ---------- Products ---------- */
+.shop { margin-top: 30px;}
+.shop h2 { font-size: 22px; margin: 0 0 4px;}
+.shop.shop-sub { color: var(--ink-soft); font-size: 13.5px; margin: 0 0 14px; line-height: 1.6;}
+.reco {
+background: var(--card); border: 2px solid var(--sun); border-radius: 18px; padding: 14px 16px; margin-bottom: 14px;
+}
+.reco.reco-t { font-size: 13px; font-weight: 700; color: #b07d10; margin: 0 0 4px;}
+.reco p { margin: 0; font-size: 14.5px; line-height: 1.65;}
+.p-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px;}
+.p-card { background: var(--card); border: 2px solid var(--line); border-radius: 18px; overflow: hidden;}
+.p-card svg { width: 100%; height: auto; display: block;}
+.p-info { padding: 10px 12px 12px;}
+.p-name { font-size: 14.5px; font-weight: 700; margin: 0 0 3px; line-height: 1.45;}
+.p-desc { font-size: 12px; color: var(--ink-soft); margin: 0 0 8px; line-height: 1.5;}
+.p-price { display: flex; align-items: baseline; gap: 7px; flex-wrap: wrap;}
+.p-now { color: var(--coral-dark); font-weight: 800; font-size: 19px;}
+.p-was { color: var(--ink-soft); font-size: 12.5px; text-decoration: line-through;}
+.p-tag { font-size: 11px; font-weight: 700; color: #fff; background: var(--coral); border-radius: 6px; padding: 2px 7px;}
+.shop-tip { margin-top: 14px; font-size: 13px; color: var(--ink-soft); line-height: 1.7; background: var(--card); border: 1.5px dashed var(--line); border-radius: 14px; padding: 12px 14px;}
+.toast {
+position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%) translateY(20px);
+background: #2e2118; color: #fff7ea; font-size: 14px; padding: 11px 18px; border-radius: 999px;
+opacity: 0; pointer-events: none; transition: all.25s ease; z-index: 50; max-width: 86vw; text-align: center;
+}
+.toast.on { opacity: 1; transform: translateX(-50%);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ===== Screen 1: Landing ===== -->
+<section class="screen on" id="scr-home">
+<div id="hero-art"></div>
+<h1 class="title display">狗格<span class="accent">测试</span></h1>
+<p class="subtitle">16 道题，测出你家狗的专属狗格<br />是快乐小太阳，还是高冷哲学家？</p>
+<div class="type-strip" id="type-strip"></div>
+<p class="hidden-hook">✦ 16 种狗格之外，传闻还有一只隐藏款……选得够佛系，才有机会遇见它</p>
+<div class="card">
+<div class="f-row">
+<label class="f-label" for="dog-name">狗狗的名字</label>
+<input class="f-input" id="dog-name" type="text" maxlength="10" placeholder="比如：豆包" autocomplete="off" />
+</div>
+<div class="f-row">
+<label class="f-label" for="dog-code">测试口令 <span class="opt">（下单后客服消息里查收）</span></label>
+<input class="f-input" id="dog-code" type="text" maxlength="16" placeholder="输入你的专属口令" autocomplete="off" style="text-transform:uppercase" />
+<p class="f-hint">一个口令只能测一次：测完后口令锁定，再次打开会直接显示你家狗的结果海报。</p>
+</div>
+<p class="err" id="form-err"></p>
+<button class="btn" id="btn-start" type="button">开始测试 →</button>
+</div>
+<div class="card how">
+<h3 class="display">怎么测？</h3>
+<ol>
+<li>凭第一印象选——选它平时最真实的样子，别替它美化。</li>
+<li>16 道题，覆盖社交、探索、决策、作息四个维度；每题都有一个「干饭 / 佛系」选项，选多了可能触发隐藏款。</li>
+<li>测完生成专属狗格海报，还能看最佳拍档和今日狗运，长按或点按钮保存，晒给朋友看。</li>
+</ol>
+</div>
+<p class="foot-note">Pawtime 宠物用品 · 狗格测试<br />本测试仅供娱乐，结果不构成任何养宠建议</p>
+</section>
+
+<!-- ===== Screen 2: Quiz ===== -->
+<section class="screen" id="scr-quiz">
+<div class="q-top">
+<span class="q-count">第 <b id="q-num">1</b> / 16 题</span>
+<span style="flex:1"></span>
+<span class="q-count" style="font-weight:400;color:var(--ink-soft);font-size:12.5px" id="q-c-hint"></span>
+</div>
+<div class="bone-wrap">
+<div class="bone-track">
+<div class="bone-fill" id="q-bone-fill"></div>
+<span class="bone-emoji" id="q-bone-emoji">🦴</span>
+</div>
+<div class="bone-label"><span>骨头啃食进度</span><span>已啃 <b id="q-bone-pct">0%</b></span></div>
+</div>
+<span class="q-dim" id="q-dim"></span>
+<p class="q-text" id="q-text"></p>
+<div id="q-opts"></div>
+<button class="q-back" id="q-back" type="button">← 上一题</button>
+</section>
+
+<!-- ===== Screen 3: Calculating ===== -->
+<section class="screen" id="scr-calc">
+<div class="calc">
+<span class="paw">🐾</span>
+<p id="calc-text">正在分析狗格中…</p>
+</div>
+</section>
+
+<!-- ===== Screen 4: Result ===== -->
+<section class="screen" id="scr-result">
+<div class="poster-card" id="poster-card" aria-live="polite"></div>
+<div class="result-actions">
+<button class="btn" id="btn-save" type="button">保存海报</button>
+<button class="btn xhs" id="btn-share" type="button">发小红书</button>
+<button class="btn sun" id="btn-copy" type="button">复制分享文案</button>
+<button class="btn ghost" id="btn-again" type="button">用新口令再测一只</button>
+</div>
+<p class="share-note">「发小红书」会先弹出海报图并自动复制文案：长按图片存到相册，再去小红书粘贴文案发布，就是一条图文笔记。</p>
+<p class="locked-note" id="locked-note"></p>
+<div class="detail-card">
+<h3 class="display">狗格详解</h3>
+<div class="tags" id="d-tags"></div>
+<p class="detail-desc" id="d-desc"></p>
+<div class="extra-box" id="d-mates"></div>
+</div>
+
+<div class="shop">
+<h2 class="display" id="shop-title">给它挑件出门装备</h2>
+<p class="shop-sub">Pawtime 品牌清仓中，清仓价卖完即止，断码不补。</p>
+<div class="reco">
+<p class="reco-t">按狗格推荐</p>
+<p id="reco-text"></p>
+</div>
+<div class="p-grid" id="p-grid"></div>
+<p class="shop-tip">购买方式：打开小红书 App，搜索店铺「Pawtime宠物用品的店」即可下单。项圈、胸背都有 XS–XL 尺码（脖围 22–72cm），下单前按狗狗脖围 / 胸围对一下尺码表，别拍错。</p>
+</div>
+</section>
+
+</div>
+<div class="img-modal" id="img-modal">
+<img id="modal-img" alt="狗格测试结果海报（3:4 高清图）" />
+<p class="m-hint">长按图片即可保存到相册</p>
+<p class="m-sub">保存后打开小红书，选这张图发图文，文案粘贴即可。</p>
+<div class="m-actions">
+<a class="btn teal" id="btn-download" download="狗格测试-结果海报.png" href="#">下载图片</a>
+<button class="btn ghost" id="btn-modal-close" type="button">关闭</button>
+</div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ===== Pawtime 结果卡组件（用户提供 pawtime-result-card.js，原样内嵌） ===== */
+/* Original Pawtime print-sticker illustrations. No dependencies or external assets. */
+function dogArt(code, palette) {
+ const {ink:I, accent:A, deep:D, light:L, paper:P}=palette;
+ const c=(x,y,r,f)=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${f}"/>`;
+ const e=(x,y,rx,ry,f)=>`<ellipse cx="${x}" cy="${y}" rx="${rx}" ry="${ry}" fill="${f}"/>`;
+ const p=(d,f='none',s=I,w=6)=>`<path d="${d}" fill="${f}" stroke="${s}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"/>`;
+ const r=(x,y,w,h,f,rr=8)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${rr}" fill="${f}" stroke="${I}" stroke-width="5"/>`;
+ const g=(a,b)=>`<g transform="${a}">${b}</g>`;
+ const spark=(x,y,s)=>g(`translate(${x} ${y}) scale(${s})`,p('M0-22Q2-3 22 0Q2 3 0 22Q-2 3-22 0Q-2-3 0-22Z',A,'none'));
+ const stars=spark(90,125,.68)+spark(490,91,1)+spark(528,243,.55)+spark(129,297,.42);
+ const heart=(x,y,s,f=A)=>g(`translate(${x} ${y}) scale(${s})`,p('M0 21C-5 15-30 1-25-12Q-22-25-9-22Q-3-20 0-14Q4-21 13-22Q28-23 28-9C29 1 12 14 0 21Z',f,I,4));
+ const dots=Array.from({length:12},(_,i)=>c(421+(i%4)*9,155+Math.floor(i/4)*9,1.5,D)).join('');
+ const shoe=(x,y)=>g(`translate(${x} ${y})`,p('M-14-20Q-25-9-23 3Q-21 15 0 15Q24 15 25 3Q24-12 13-20',P)+p('M-10 11v-7m17 7v-7','none',I,3));
+ function dog(opts){
+ const {ears='up', mood='smile', tilt=0, coat=L, spot=true, wink=false, arms='rest', badge='', head=''}=opts;
+ const tails=p('M383 276Q445 222 462 262Q469 289 431 305Q415 312 385 308',coat)+p('M448 253q-3 13-20 24','none',I,4);
+ let earsSVG=ears==='up'?
+   p('M205 157Q188 122 189 62Q190 47 204 55Q243 72 263 99L247 137Z',coat)+p('M346 106Q366 68 408 58Q422 52 423 66Q422 115 395 154Z',coat)+p('M208 72Q229 84 242 104L222 118Z',A,'none')+p('M406 74Q385 83 369 105L389 117Z',A,'none'):
+   p('M229 105Q174 79 164 141Q149 194 170 217Q184 229 203 207l45-72Z',A)+p('M369 107Q416 77 440 129Q455 164 435 203Q418 223 401 198l-48-66Z',A);
+ const faceShape=ears==='up'?'M189 164Q188 112 245 99Q258 84 270 97Q287 77 305 91Q326 81 344 96Q401 93 419 147Q449 163 426 183Q443 203 420 212Q411 248 309 252Q203 255 187 209Q166 198 183 181Q172 171 189 164Z':'M193 162Q200 114 241 102Q254 86 270 99Q286 80 304 94Q323 81 339 99Q395 102 410 156Q423 183 415 209Q410 250 308 253Q211 254 194 212Q179 190 193 162Z';
+ const face=earsSVG+p(faceShape,coat)+(spot?p('M201 164Q213 120 258 105Q284 107 291 133Q272 160 246 181Q219 192 201 164Z',A,'none'):'')+
+ p('M240 219Q240 185 272 177Q300 168 330 176Q368 183 368 220Q357 242 306 242Q254 243 240 219Z',P,'none')+
+ (mood==='sleep'?p('M227 165q14 13 26-1m102-1q14 12 25-1','none',I,5):wink?p('M223 161q15-13 28 1','none',I,5)+e(370,162,7,10,I):mood==='smile'?p('M225 164q13-13 27 0m104-1q13-13 26 0','none',I,5):e(239,164,7,10,I)+e(368,162,7,10,I))+
+ e(215,190,12,7,A)+e(397,190,12,7,A)+p('M290 180Q304 174 319 180Q327 188 305 197Q286 191 290 180Z',I,'none')+
+ (mood==='smile'?p('M285 203Q304 218 324 201Q321 225 306 226Q293 225 285 203Z',I,'none')+e(307,222,8,5,A):p(mood==='serious'?'M295 211q12-5 22-2':'M290 207q14 13 29-2','none',I,4))+head;
+ const limbs=arms==='up'?p('M219 282Q188 273 174 245Q155 234 153 254Q148 284 205 303',P)+p('M389 282Q420 273 430 245Q450 229 455 253Q457 281 405 303',P):arms==='wave'?p('M221 282Q196 282 171 247Q150 234 150 255Q151 279 188 304Q198 313 215 309',P)+shoe(382,307):shoe(226,309)+shoe(383,309);
+ return tails+p('M223 282Q231 223 298 220Q370 220 390 277Q415 330 359 340Q307 347 256 340Q202 330 223 282Z',coat)+
+ p('M261 310Q259 277 294 267Q333 260 350 291Q368 320 351 335Q303 349 261 330Z',P,'none')+
+ p('M235 265Q299 295 374 263l-8-17Q303 267 241 247Z',A,I,4)+badge+limbs+g(`rotate(${tilt} 306 170)`,face);
+ }
+ const glasses=p('M213 151q36-10 77 0l-4 25q-22 25-59 6Z M313 151q36-13 80-3l-7 27q-25 29-63 7Z',I)+p('M286 155q12-10 29 0','none',I,5)+p('M229 154l25 22m68-23 24 18','none',P,4);
+ const beret=p('M230 114Q239 86 287 77Q341 68 367 96L372 111Q317 109 235 123Z',A)+p('M287 76q-5-15 10-19','none',I,6);
+ const collar=e(306,277,11,12,A)+c(306,277,4,I);
+ const halo=p('M109 242C63 184 111 75 226 44C351 8 482 68 498 175C515 291 420 351 296 349C208 348 150 302 109 242Z',P,'none');
+ function music(x,y,z=1){return g(`translate(${x} ${y}) scale(${z})`,p('M-1 30V-18L34-24V23','none',I,6)+e(-11,33,14,10,A)+e(24,26,14,10,A))}
+ function scroll(x,y){return g(`translate(${x} ${y})`,r(-37,-50,74,100,P)+p('M-20-21h40m-40 18h40m-40 17h30','none',D,5)+p('M10 34l10 10 22-27','none',I,5))}
+ function bowl(x,y,k=1){return g(`translate(${x} ${y}) scale(${k})`,p('M-69-7  -48 57Q0 73 49 57L69-7Z',A)+e(0,-7,69,18,P)+p('M-69-7a69 18 0 1 0 138 0a69 18 0 1 0-138 0Z')+e(0,-1,43,11,D)+heart(0,37,.72,P))}
+ function bouquet(x,y){return g(`translate(${x} ${y})`,p('M-8 70L-20-17M-8 70 31 2M-8 70 7-44','none',I,5)+p('M0 39Q17 7 40 26Q23 45 0 39M-13 23q-11-28-35-22 4 22 35 22',L)+c(-21,-22,15,A)+c(30,-2,17,A)+c(8,-49,18,A)+c(-21,-22,5,P)+c(30,-2,5,P)+c(8,-49,5,P))}
+ function flag(x,y){return g(`translate(${x} ${y})`,p('M0 74V-60','none',I,6)+p('M0-55Q32-72 68-41Q38-42 0-19Z',A)+spark(26,-45,.42))}
+ function planet(x,y){return g(`translate(${x} ${y}) rotate(-20)`,e(0,0,52,50,A)+p('M-78 2q-3 22 78 22T78 2','none',I,7)+p('M-78 2q-5-13 24-16m132 16q5-13-24-16','none',I,6)+p('M-13-31q15 3 24 13M-24-23l5 5','none',P,5))}
+ let o={badge:collar}, back='', front='', bodyT='translate(0 2)';
+ switch(code){
+ case 'ENFP':
+   o={...o,ears:'drop',tilt:-9,arms:'up',head:c(348,91,10,A)};back=spark(104,108,2)+spark(476,110,1.4)+spark(497,223,1.05);
+   front=g('translate(121 238)',p('M0 4q-13-35 10-53q22 34-10 53Z',A)+p('M0 4q-25-23-41-14 4 19 41 14Z',L));break;
+ case 'ENFJ':
+   o={...o,ears:'drop',tilt:-5,arms:'wave'};back=flag(108,173)+spark(489,89,1.6);front=heart(435,261,1.19);break;
+ case 'ENTP':
+   o={...o,tilt:7,wink:true,arms:'up',head:p('M252 105q12-30 35-31q-10 12-7 22q24-21 51-14','none',I,5)};back=g('translate(112 139)',p('M-24 12a31 31 0 1 1 48-1q-13 9-13 28h-22q0-17-13-27Z',A)+p('M-12 46h24m-17 8h10','none',I,4));front=p('M438 302l30-53 38 18-32 53Z',P)+p('M455 288l26 12m-16-28 25 13','none',D,5);break;
+ case 'ENTJ':
+   o={...o,mood:'serious',tilt:-3,head:p('M218 114q20-53 74-57q73-9 110 56Q328 92 218 123Z',A)+p('M225 113q97-23 174 2','none',I,7)};back=flag(111,225);front=g('translate(447 273)',r(-48,-35,34,65,P,14)+r(-8,-35,34,65,P,14)+p('M-33-35h45m-17 19v23','none',I,5));break;
+ case 'ESFP':
+   o={...o,ears:'drop',tilt:9,arms:'up',head:p('M270 108l44-78 39 79Z',A)+c(314,27,10,P)+c(313,70,6,P)+c(331,90,7,P)};back=music(100,150,1.2)+music(463,141,1.15);front=spark(105,259,1)+spark(488,275,1.2);break;
+ case 'ESFJ':
+   o={...o,ears:'drop',tilt:-4,arms:'wave'};back=heart(120,143,1.05)+heart(488,110,.7);front=g('translate(456 265)',r(-51,-46,102,85,P)+p('M-51-29 0 2 51-29','none',I,5)+heart(0,8,.6));break;
+ case 'ESTP':
+   bodyT='translate(0 -20) rotate(-8 300 240)';o={...o,spot:false,mood:'grin',coat:A,arms:'wave',head:glasses};
+   back=p('M63 180h83m-111 31h123m300-47h60m-36 28h88','none',D,7);front=g('rotate(-8 306 325)',p('M160 319Q160 313 169 313h263q25 0 34-16q6 18-9 26q-13 10-27 11H181q-17 0-21-15Z',A)+c(206,342,13,I)+c(411,342,13,I)+c(206,342,5,P)+c(411,342,5,P));break;
+ case 'ESTJ':
+   o={...o,mood:'serious',head:p('M219 106Q254 55 306 65Q357 65 381 99L389 119Q304 98 223 117Z',A)+p('M284 82q22-5 42 2','none',P,5)};back=flag(110,189);front=scroll(459,270);break;
+ case 'INFP':
+   o={...o,ears:'drop',mood:'sleep',tilt:10};back=g('translate(446 114)',p('M25-59q-28 15-26 45q1 38 32 53q-54 13-70-29q-20-50 30-72q15-5 34 3Z',A));front=g('translate(310 316)',p('M0-20Q-56-67-109-27l4 77q48-7 105 9q48-22 108-10l5-77Q46-59 0-20Z',P)+p('M0-18v70m-87-46q29 0 67 18m41-8q38-20 70-12','none',D,4));break;
+ case 'INFJ':
+   o={...o,mood:'grin',tilt:7};back=g('translate(117 123)',p('M-27 28Q-32-28 35-39Q45 21-27 28Z',A)+p('M-31 39 14-16','none',I,5));front=heart(437,268,1.15)+heart(479,211,.55,P);break;
+ case 'INTP':
+   o={...o,ears:'drop',mood:'grin',tilt:-6,head:p('M226 163a22 20 0 1 0 44 0a22 20 0 1 0-44 0m100 0a22 20 0 1 0 44 0a22 20 0 1 0-44 0m-53-2q24-15 50-2','none',I,5)};back=planet(465,112);front=g('translate(140 264) rotate(-21)',p('M-28 5a34 34 0 1 0 68 0a34 34 0 0 0-68 0Z',P)+p('M11 38l17 51','none',I,11)+p('M-13-5q11-18 27-12','none',A,6));break;
+ case 'INTJ':
+   o={...o,mood:'serious',tilt:-7};back=planet(460,119);front=g('translate(134 273)',p('M-30 31h88l-8-22h-14l-4-14q24-64-20-73l-13 18q-23 10-30 30l9 12 22-8-7 34h-16Z',A)+c(8,-51,4,I));break;
+ case 'ISFP':
+   o={...o,ears:'drop',tilt:-9,head:beret};back=music(470,128,.85);front=g('translate(458 272) rotate(25)',p('M-55-1q0-44 57-42q44 5 44 35q1 13-25 13q-15 0-18 12q-7 33-33 22q-28-9-25-40Z',P)+c(-28,-12,9,A)+c(-11,-25,9,D)+c(8,-23,9,L)+p('M12 30 49-48','none',I,7)+p('M48-48q-4-26 15-35q13 14-15 35Z',A));break;
+ case 'ISFJ':
+   o={...o,ears:'drop',mood:'sleep',tilt:6};back=heart(477,115,.84);front=bouquet(435,238)+p('M203 300Q239 312 257 286Q331 311 409 282L397 331Q303 375 210 337Z',A)+p('M238 320q70 29 131-5','none',P,6);break;
+ case 'ISTP':
+   o={...o,mood:'serious',tilt:5,head:p('M230 155l38-7 11 25-38 6Zm96-5 39 4-3 24-38-4Z',P)+p('M279 160q20-8 44 0','none',I,5)};back=p('M97 146l22-23 14 13 20-15 13 13-15 21 13 15-21 22-19-12-20 10-12-18 13-13Z',A);front=g('translate(446 276) rotate(40)',p('M-8-63-15-41Q-10-34-7-29v75q0 13 13 13q11 0 11-13V-29q8-7 8-15L16-66l-9 18-5-1Z',A));break;
+ case 'ISTJ':
+   o={...o,ears:'drop',mood:'serious',tilt:-3};back=g('translate(466 127)',c(0,0,48,I)+c(0,0,41,P)+p('M1-24v26l18 8','none',I,6));front=scroll(142,263);break;
+ case 'HIDDEN':
+ default:
+   o={...o,ears:'drop',mood:'sleep',tilt:0,coat:A,spot:false,head:p('M231 112l19-37 32 26 24-40 23 39 33-24 17 37q-73-17-148-1Z',P)};back=planet(470,107)+spark(117,104,2.5);front=bowl(303,291,1.31);break;
+ }
+ const pattern=Array.from({length:25},(_,i)=>c(109+(i%5)*8,202+Math.floor(i/5)*8,1.45,D)).join('');
+ return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" aria-hidden="true" focusable="false">${halo}${dots}${pattern}${stars}${back}${e(304,349,159,13,D)}${g(bodyT,dog(o))}${front}</svg>`;
+}
+
+const DOGS = [
+["ENFP","快乐小太阳","把门铃听成开场铃。","开门先摇尾巴","见谁都要打招呼"],
+["ENFJ","热心小队长","人没到齐，谁也别出发。","一家人走一起","回头点名"],
+["ENTP","捣蛋发明家","不是拆家，是在测试结构。","拆出新玩法","纸箱鉴定师"],
+["ENTJ","巡逻大队长","这条街，今天也归我管。","固定路线巡查","路口必须验收"],
+["ESFP","派对气氛王","三个路人，就够开一场派对。","哪里热闹去哪","合照必须站中间"],
+["ESFJ","暖心小管家","你少吃一口，我都看见了。","饭点主动来催","家里动静全知道"],
+["ESTP","冒险小旋风","别想太多，先冲再说。","新路先去探","水坑绕不开"],
+["ESTJ","规矩小班长","迟到一分钟，碗已经敲三下。","饭点准时","散步路线有规定"],
+["INFP","做梦小诗人","一片叶子，可以看一下午。","爱发呆","擅长追一片叶子"],
+["INFJ","温柔观察家","你还没开口，我先把头靠过来。","先观察再靠近","发现你不开心"],
+["INTP","好奇研究员","这个洞，我得再闻第三遍。","喜欢反复确认","对新东西好奇"],
+["INTJ","高冷哲学家","我不想过来，但你可以过来。","喜欢保持距离","靠近要看心情"],
+["ISFP","自由小艺术家","你走直线，我去追光斑。","按心情散步","一片草地玩很久"],
+["ISFJ","贴心小棉袄","你不说话，我也陪你坐一会儿。","安静跟在身边","最爱熟悉的人"],
+["ISTP","冷酷手艺狗","玩具不说话，我就拆开问问。","自己研究玩具","动手比动嘴快"],
+["ISTJ","靠谱老干部","散步回家，先在门口擦脚。","日程点滴不忘","最爱熟悉路线"],
+["HIDDEN","干饭哲学家","世上没有难题，只有空碗。","饭盆一响就到岗","先吃饭再思考"]
+].map(([code,title,line,a,b],i)=>({code,title,line,tags:[a,b],i}));
+const PALETTES = [
+{ink:"#292625",accent:"#FBAC9A",deep:"#AC3428",light:"#FFE9DF",paper:"#FFF9EE"},
+{ink:"#292625",accent:"#C7C0FF",deep:"#4D3A9B",light:"#EDE7FF",paper:"#FFF9EE"},
+{ink:"#292625",accent:"#AFE0A0",deep:"#265D3C",light:"#E3F2DA",paper:"#FFF9EE"},
+{ink:"#292625",accent:"#FFCD61",deep:"#865019",light:"#FCEBBE",paper:"#FFF9EE"},
+{ink:"#292625",accent:"#F8C54A",deep:"#6C4216",light:"#FFEDAC",paper:"#FFF9EE"}
+];
+const FAMILY = {ENFP:3,ENFJ:2,ENTP:1,ENTJ:1,ESFP:0,ESFJ:2,ESTP:0,ESTJ:3,INFP:1,INFJ:2,INTP:1,INTJ:1,ISFP:0,ISFJ:2,ISTP:0,ISTJ:3,HIDDEN:4};
+const esc=s=>String(s??"").replace(/[<>&"']/g,x=>({"<":"&lt;",">":"&gt;","&":"&amp;",'"':"&quot;","'":"&apos;"}[x]));
+const cut=(s,n)=>Array.from(String(s??"").normalize("NFC")).slice(0,n).join("");
+function resultSvg(code, opts={}){
+ const d=DOGS.find(d=>d.code===code);
+ if(!d) throw new Error("Unknown dog type: "+code);
+ const {ink,accent,deep,light,paper}=PALETTES[FAMILY[code]], p={ink,accent,deep,light,paper};
+ const name=cut(String(opts.name??"").trim(),12)||"我家小狗"; const title=esc(d.title);
+ const no=code==="HIDDEN"?"??":String(d.i+1).padStart(2,"0"), mark=code==="HIDDEN"?"隐藏款":code;
+ const nsize=Math.min(38,Math.floor(244/(Array.from(name).length+3)));
+ const nums=Array.isArray(opts.scores)&&opts.scores.length===4&&opts.scores.every(v=>typeof v==="number"&&Number.isFinite(v))?opts.scores.map(v=>Math.max(0,Math.min(100,Math.round(v)))):null;
+ const rating=Number.isInteger(opts.rarity)&&opts.rarity>=1&&opts.rarity<=5?opts.rarity:null;
+ const lab={E:"外向",I:"内向",S:"实感",N:"直觉",T:"理性",F:"感性",J:"规划",P:"随性"};
+ const a=[];
+ const txt=(x,y,size,content,extra="")=>'<text x="'+x+'" y="'+y+'" font-size="'+size+'" '+extra+'>'+esc(content)+'</text>';
+ a.push('<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1440" viewBox="0 0 1080 1440" role="img" aria-label="'+esc(name+"的狗格："+d.title)+'">');
+ a.push('<defs><pattern id="dots" width="8" height="8" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="0.85" fill="'+ink+'" opacity=".15"/></pattern><clipPath id="artclip"><rect x="42" y="125" width="996" height="747" rx="26"/></clipPath></defs>');
+ a.push('<rect width="1080" height="1440" fill="'+paper+'"/><g font-family="PingFang SC, Noto Sans CJK SC, Microsoft YaHei, sans-serif" fill="'+ink+'">');
+ a.push(txt(54,78,38,"PAWTIME",'font-weight="900" letter-spacing="4"'));
+ a.push(txt(284,76,28,"爪间狗格研究所",'font-weight="650"'));
+ a.push(txt(1027,75,27,"狗狗性格档案",'font-weight="700" text-anchor="end"'));
+ a.push('<path d="M49 101H1031" stroke="'+ink+'" stroke-width="2"/>');
+ a.push('<rect x="42" y="125" width="996" height="747" rx="26" fill="'+accent+'" stroke="'+ink+'" stroke-width="4"/>');
+ a.push('<g clip-path="url(#artclip)"><circle cx="730" cy="532" r="287" fill="'+light+'" opacity=".85"/><circle cx="802" cy="606" r="275" fill="url(#dots)"/>');
+ a.push('<path d="M65 767C249 714 421 721 490 766S761 841 1029 745" fill="none" stroke="'+ink+'" opacity=".18" stroke-width="3" stroke-dasharray="9 11"/>');
+ a.push('<g transform="translate(122 321) scale(1.37)">'+dogArt(code,p).replace('<svg ', '<svg width="600" height="400" ')+'</g></g>');
+ a.push('<rect x="73" y="153" width="272" height="65" rx="32" fill="'+paper+'" stroke="'+ink+'" stroke-width="3"/>');
+ a.push(txt(209,197,nsize,name+"的狗格",'font-weight="800" text-anchor="middle"'));
+ a.push('<rect x="775" y="153" width="231" height="63" rx="12" fill="'+ink+'"/>');
+ a.push(txt(892,196,27,code==="HIDDEN"?"隐藏档案":"档案 "+no+" / 16",'fill="'+paper+'" text-anchor="middle" font-weight="750"'));
+ a.push(txt(81,329,Math.min(104,Math.floor(899/Array.from(d.title).length)),d.title,'font-weight="900" letter-spacing="1"'));
+ a.push('<g transform="translate(108 365) rotate(-5)"><rect width="150" height="67" rx="8" fill="'+deep+'" stroke="'+ink+'" stroke-width="3"/>');
+ a.push(txt(75,46,35,mark,'fill="'+paper+'" font-weight="900" letter-spacing="2" text-anchor="middle"')+'</g>');
+ a.push('<g transform="translate(885 756) rotate(8)"><circle r="75" fill="'+paper+'" stroke="'+ink+'" stroke-width="4"/><circle r="64" fill="none" stroke="'+deep+'" stroke-width="2" stroke-dasharray="4 5"/>');
+ a.push(txt(0,-12,19,"狗格认证",'text-anchor="middle" font-weight="750"'));
+ a.push(txt(0,34,39,no,'text-anchor="middle" fill="'+deep+'" font-weight="900"')+'</g>');
+ a.push('<path d="M44 919H1036" stroke="'+ink+'" opacity=".46" stroke-width="2" stroke-dasharray="6 6"/>');
+ a.push(txt(61,906,25,"本狗发言",'fill="'+deep+'" font-weight="800"'));
+ a.push(txt(1019,906,21,"PAWTIME DOG FILES",'text-anchor="end" font-weight="800" letter-spacing="2"'));
+ a.push(txt(61,991,Math.min(53,Math.floor(945/Array.from(d.line).length)),d.line,'font-weight="850"'));
+ d.tags.forEach((s,i)=>{let x=61+i*475;a.push('<rect x="'+x+'" y="1025" width="451" height="64" rx="32" fill="'+light+'" stroke="'+deep+'" stroke-width="2"/>');a.push(txt(x+225,1067,29,"# "+s,'font-weight="760" fill="'+deep+'" text-anchor="middle"'));});
+ if(nums && code!=="HIDDEN") {
+   nums.forEach((v,i)=>{let x=61+i*245;a.push('<path d="M'+x+' 1122h220" stroke="'+light+'" stroke-width="11" stroke-linecap="round"/>');if(v)a.push('<path d="M'+x+' 1122h'+(220*v/100)+'" stroke="'+deep+'" stroke-width="11" stroke-linecap="round"/>');a.push(txt(x,1160,21,code[i]+" "+lab[code[i]],'font-weight="800"'));a.push(txt(x+220,1160,21,v+"%",'font-weight="800" text-anchor="end"'));});
+ } else {
+   a.push(txt(61,1148,24,code==="HIDDEN"?"隐藏档案已解锁":"你家那位，也有自己的讲究。",'fill="'+deep+'" font-weight="700"'));
+ }
+ if(opts.best||opts.rival){
+    a.push(txt(61,1217,26,"最佳拍档  "+cut(opts.best||"待解锁",17),'font-weight="700"'));
+    a.push(txt(1019,1217,26,"欢喜冤家  "+cut(opts.rival||"待解锁",17),'font-weight="700" text-anchor="end"'));
+ } else {
+    a.push(txt(61,1217,26,"你家狗也这样吗？",'font-weight="750"'));
+    a.push(txt(1019,1217,24,"晒出你的狗格 →",'fill="'+deep+'" font-weight="800" text-anchor="end"'));
+ }
+ a.push('<path d="M60 1245H1020" stroke="'+ink+'" opacity=".35" stroke-width="2" stroke-dasharray="6 6"/>');
+ if(opts.fortune || rating) a.push(txt(61,1286,23,opts.fortune?"今日狗运  "+cut(opts.fortune,35):"趣味星级  "+"★".repeat(rating)+"☆".repeat(5-rating),'fill="'+deep+'" font-weight="700"'));
+ else a.push(txt(61,1286,23,"仅供娱乐 · 不是动物行为评估",'fill="'+deep+'" font-weight="650"'));
+ a.push('<rect x="42" y="1315" width="996" height="83" rx="15" fill="'+ink+'"/>');
+ a.push(txt(70,1367,31,"#Pawtime爪间宠物",'fill="'+paper+'" font-weight="800"'));
+ a.push(txt(1005,1366,23,"狗格测试 · 仅供娱乐",'fill="'+paper+'" font-weight="700" text-anchor="end"')+'</g></svg>');
+ return a.join("");
+}
+
+window.PawtimeResultCard={render:resultSvg,types:DOGS};
+</script>
+<script>
+/* ================= Data: 16 dog personalities ================= */
+var TYPES = {
+ENFP: { title: "快乐小太阳", one: "快乐会传染，它就是源头。", motto: "快乐要分享，零食要双份。", rare: 3,
+desc: "出门五分钟，快乐一整天。{n}对世界永远好奇，对谁都自来熟，尾巴就是它的心情播报器。和它在一起很难不开心——它最大的本事，就是把普通的一天过成节日。",
+tags: ["自来熟", "精力充沛", "快乐源泉"], coat: "#f2b25c", patch: "#fff3dd", ear: "floppy", acc: "balloon", bg: "#ffe9b8"},
+ENFJ: { title: "热心小队长", one: "狗群里的气氛组组长，也是大家长。", motto: "大家开心，我就开心。", rare: 4,
+desc: "{n}天生操心命：小伙伴吵架它去劝， 主人emo它来贴。它总能第一时间察觉大家的情绪，是那种谁都喜欢、谁都想靠近的狗。被它管着，其实很幸福。",
+tags: ["操心命", "高情商", "大家长"], coat: "#e8975a", patch: "#ffeeda", ear: "floppy", acc: "medal", bg: "#ffd9c2"},
+ENTP: { title: "捣蛋发明家", one: "规则就是用来钻空子的。", motto: "规矩是用来打破的，零食是用来抢的。", rare: 4,
+desc: "{n}的脑子一刻不停：柜门怎么开、零食藏哪儿、围栏怎么翻，它门儿清。别怪它拆家——那是它在做实验。给足它动脑的玩具，它能自己玩出一朵花。",
+tags: ["鬼点子王", "拆家预备役", "好奇心爆棚"], coat: "#c98d5f", patch: "#fdeed3", ear: "pointy", acc: "bulb", bg: "#d9f0e3"},
+ENTJ: { title: "巡逻大队长", one: "这个家，它说了算。", motto: "我的地盘我做主，你的零食也归我管。", rare: 5,
+desc: "{n}走路带风，眼神有威严：领地要巡、队伍要带、规矩要立。它不是凶，是责任心太强。只要认定了你，它就是你最靠谱的保镖，安全感直接拉满。",
+tags: ["气场两米八", "责任心强", "天生领导"], coat: "#8d6e63", patch: "#efe0d5", ear: "pointy", acc: "crown", bg: "#f6dfd2"},
+ESFP: { title: "派对气氛王", one: "有它的地方，就是舞台中央。", motto: "人生苦短，必须好玩，饭必须管饱。", rare: 3,
+desc: "{n}为镜头而生：翻肚皮、转圈圈、歪头杀，营业技能点满。它享受每一个注视的目光，也真心喜欢逗你笑。家里养了它，等于常驻一个开心果。",
+tags: ["戏精本精", "镜头感满分", "开心果"], coat: "#f5c177", patch: "#fff3da", ear: "floppy", acc: "party", bg: "#ffd6e7"},
+ESFJ: { title: "暖心小管家", one: "你几点回家，它比闹钟还清楚。", motto: "你若安好便是晴天，你若有饭便是过年。", rare: 3,
+desc: "{n}把照顾你当成终身事业：你回家它在门口，你吃饭它在桌边，你生病它守床边。它的世界不大，装的全是你。这种黏人，是被偏爱的证据。",
+tags: ["黏人精", "操心全家", "治愈系"], coat: "#eab676", patch: "#fff0d8", ear: "floppy", acc: "heart", bg: "#ffe3d9"},
+ESTP: { title: "冒险小旋风", one: "先冲了再说，是它的座右铭。", motto: "别想太多，先冲再说。", rare: 4,
+desc: "{n}的字典里没有『怕』字：高台敢跳、水坑敢踩、新路线第一个冲。它的快乐简单又直接——动起来！养它的人，运动量想不达标都难。",
+tags: ["胆大包天", "运动健将", "行动派"], coat: "#d98e4a", patch: "#fdeeda", ear: "pointy", acc: "shades", bg: "#cdeffb"},
+ESTJ: { title: "规矩小班长", one: "饭点就是饭点，一分钟都不能晚。", motto: "没有规矩，不成干饭。", rare: 3,
+desc: "{n}是秩序爱好者：散步路线要固定，吃饭时间要准时，玩具要放回原位。它看起来一本正经，其实最让人省心——靠谱，就是它最大的可爱。",
+tags: ["守时达狗", "一本正经", "靠谱担当"], coat: "#a1887f", patch: "#efe6e0", ear: "floppy", acc: "cap", bg: "#e3ecdc"},
+INFP: { title: "做梦小诗人", one: "它看窗外发呆的样子，在想整个宇宙。", motto: "世界很大我想去看看，先吃饱再说。", rare: 4,
+desc: "{n}安静、敏感、内心戏丰富：一片落叶能看半天，一声雷响要躲半天。它不争不抢，只是默默把温柔都留给最信任的人。懂它的，会被它治愈一辈子。",
+tags: ["内心戏丰富", "温柔敏感", "慢热型"], coat: "#f0d0a9", patch: "#fff6e6", ear: "floppy", acc: "flower", bg: "#e6f2dd"},
+INFJ: { title: "温柔观察家", one: "它不说话，但它什么都懂。", motto: "安静观察，默默守护，悄悄贴贴。", rare: 5,
+desc: "{n}总在角落安静观察，却能在你难过的第一秒准时出现。它不轻易亲近人，可一旦认定你，那份忠诚安静又滚烫。是狗里难得的『灵魂伴侣』型。",
+tags: ["读心术", "安静忠诚", "灵魂伴侣"], coat: "#bcaaa4", patch: "#f3ece7", ear: "floppy", acc: "moon", bg: "#dde8f5"},
+INTP: { title: "好奇研究员", one: "万物皆可研究，包括你的拖鞋。", motto: "十万个为什么，不如先闻闻这是什么味。", rare: 5,
+desc: "{n}对世界有一百个问号：瓶子为什么响、影子为什么动、门后有什么。它可以自己琢磨一个玩具一下午，不吵不闹。给它解谜玩具，它会回你一个惊喜。",
+tags: ["十万个为什么", "独立思考", "解谜高手"], coat: "#cfb59a", patch: "#f8efe0", ear: "pointy", acc: "magnifier", bg: "#e2efe9"},
+INTJ: { title: "高冷哲学家", one: "不是不爱你，是爱得有分寸。", motto: "我不是高冷，我只是在思考下一顿。", rare: 5,
+desc: "{n}有自己的节奏和判断：不盲从、不讨好，口令学一遍就会，只是不一定每次都配合。它看起来高冷，其实心里自有一本『谁对我好』的账，你排第一页。",
+tags: ["高冷外表", "智商在线", "有主见"], coat: "#90a4ae", patch: "#e8eef1", ear: "pointy", acc: "glasses", bg: "#e4e7f2"},
+ISFP: { title: "自由小艺术家", one: "心情好时，连走路都在踩节拍。", motto: "随心所欲，随饭而安。", rare: 3,
+desc: "{n}随性又浪漫：喜欢晒太阳、追蝴蝶、在草地上打滚到忘我。它不爱被管束，你越给它自由，它越愿意回头奔向你。美，就是它生活的全部意义。",
+tags: ["随性浪漫", "颜值担当", "自由灵魂"], coat: "#f3cf8f", patch: "#fff4dc", ear: "floppy", acc: "palette", bg: "#fdeeda"},
+ISFJ: { title: "贴心小棉袄", one: "它的爱不大声，但无处不在。", motto: "爱不说出口，都藏在陪伴里。", rare: 4,
+desc: "{n}是那种默默付出的狗：你加班它陪你熬夜，你出门它守着门口。它不抢风头、不闹脾气，只要一家人在一起，它就觉得圆满。养到它，是福气。",
+tags: ["默默付出", "守护型", "小棉袄"], coat: "#e6c39a", patch: "#fdf0da", ear: "floppy", acc: "scarf", bg: "#fde8e0"},
+ISTP: { title: "冷酷手艺狗", one: "话不多，但动手能力一流。", motto: "能动手就别吵吵，能自己开罐就自己开。", rare: 4,
+desc: "{n}是行动派里的技术流：玩具到它爪里，三分钟摸清结构；门锁怎么开，它看两遍就会。它不黏人，但关键时刻永远第一个站出来。酷，是刻在骨子里的。",
+tags: ["动手能力强", "冷静沉着", "深藏不露"], coat: "#a1887f", patch: "#eee3da", ear: "pointy", acc: "bandana", bg: "#dfe9e4"},
+ISTJ: { title: "靠谱老干部", one: "稳重，是它给这个家的定心丸。", motto: "稳中求进，饭点必到。", rare: 3,
+desc: "{n}做事一板一眼：巡逻、吃饭、睡觉，样样按表走。它不搞突然袭击，也不情绪化，是全家人最安心的存在。它的爱不张扬，但几十年如一日地准时。",
+tags: ["稳重踏实", "守规矩", "定心丸"], coat: "#8d7b68", patch: "#ece2d2", ear: "floppy", acc: "tie", bg: "#e8e4d8"}
+};
+
+/* ================= Hidden type: 干饭哲学家 ================= */
+var HIDDEN = {
+title: "干饭哲学家", one: "这只狗的人生信条只有四个字——干饭自由。",
+motto: "天大地大，干饭最大；碗空一秒，狗生无常。",
+desc: "{n}看淡了狗格的纷争：社交？探索？决策？都不如饭碗实在。它的快乐特别简单——碗里有粮、嘴里有味、饭后能睡个回笼觉。别拿玩具和远方诱惑它，除非……远方有更好吃的。它不是懒，它只是把一生都活明白了。",
+tags: ["干饭第一名", "零食雷达", "佛系本系", "饭点永动机"],
+coat: "#e8a317", patch: "#fff3d6", ear: "floppy", acc: "bowl", bg: "#ffe08a",
+funDims: [
+["社交", "看有没有吃的"],
+["探索", "鼻子只认饭香"],
+["决策", "先吃，再说"],
+["作息", "饭点永不迟到"]
+]
+};
+
+/* ================= Data: 16 questions, 3 options each =================
+A/B: 对立两极各 +2 分；C: 干饭/佛系中间项，两极各 +1 分 */
+var QUESTIONS = [
+{ dim: "社交能量", pair: "EI", q: "小区里一群狗在「开会」，{n}会？",
+a: { t: "冲进去当气氛组组长，挨个打招呼", v: "E"}, b: { t: "在边上观察半天，确认气氛对了再加入", v: "I"}, c: { t: "先看看有没有人带吃的，没吃的就撤"}},
+{ dim: "社交能量", pair: "EI", q: "家里来了客人，{n}的第一反应是？",
+a: { t: "摇着尾巴迎上去，求摸摸求关注", v: "E"}, b: { t: "躲到沙发后面暗中观察，混熟了才出来", v: "I"}, c: { t: "围着客人的包转圈，闻闻有没有零食"}},
+{ dim: "社交能量", pair: "EI", q: "到了宠物乐园，{n}通常是？",
+a: { t: "满场飞奔交朋友，玩到叫不回来", v: "E"}, b: { t: "只跟合眼缘的一两只玩，其他的随缘", v: "I"}, c: { t: "对狗没什么兴趣，直奔休息区干饭"}},
+{ dim: "社交能量", pair: "EI", q: "遛弯遇到熟人狗，{n}会？",
+a: { t: "老远就激动起来，拉着你去打招呼", v: "E"}, b: { t: "点头之交，闻一下就各走各的", v: "I"}, c: { t: "先看对方主人手里，有没有好吃的"}},
+{ dim: "探索方式", pair: "SN", q: "{n}的散步风格更像哪一种？",
+a: { t: "每棵树、每个电线杆都要闻到位，流程不能少", v: "S"}, b: { t: "总想拐进没走过的小路，探索新地图", v: "N"}, c: { t: "路线不重要，终点有吃的就行"}},
+{ dim: "探索方式", pair: "SN", q: "家里多了一个纸箱，{n}会先怎么做？",
+a: { t: "围着闻上三分钟，确认安全再靠近", v: "S"}, b: { t: "立刻钻进去，开发纸箱的新用途", v: "N"}, c: { t: "先咬一口，看看能不能吃"}},
+{ dim: "探索方式", pair: "SN", q: "新玩具到家，{n}的打开方式是？",
+a: { t: "先叼来旧玩具对比一下，新旧都要宠幸", v: "S"}, b: { t: "玩法自己发明，从来不看「说明书」", v: "N"}, c: { t: "玩两下就去看饭碗，空了没"}},
+{ dim: "探索方式", pair: "SN", q: "窗外突然有动静，{n}会？",
+a: { t: "盯着看，搞清楚到底是什么才安心", v: "S"}, b: { t: "叫两声发表一下看法，然后就不管了", v: "N"}, c: { t: "不是送外卖的，就不关心"}},
+{ dim: "决策风格", pair: "TF", q: "和别的狗抢同一个玩具，{n}一般会？",
+a: { t: "正面刚，绝不退让，是我的就是我的", v: "T"}, b: { t: "装可怜卖萌，让对方心软让给它", v: "F"}, c: { t: "趁它们争的时候，默默把旁边的零食吃了"}},
+{ dim: "决策风格", pair: "TF", q: "犯错被当场发现，{n}的反应是？",
+a: { t: "一脸无所谓：被抓就被抓，下次还敢", v: "T"}, b: { t: "立刻翻肚皮撒娇，求原谅求抱抱", v: "F"}, c: { t: "先跑为敬，等你气消了再回来"}},
+{ dim: "决策风格", pair: "TF", q: "{n}想要桌上的鸡腿，它会？",
+a: { t: "直勾勾盯着，伺机而动，讲究战术", v: "T"}, b: { t: "眼神攻势，一眨不眨把你看到心软", v: "F"}, c: { t: "守在厨房门口，等掉下来的那一块"}},
+{ dim: "决策风格", pair: "TF", q: "洗澡时间到，{n}的态度是？",
+a: { t: "认命配合，早洗完早了事", v: "T"}, b: { t: "满屋跑酷，能拖一秒是一秒", v: "F"}, c: { t: "洗完有零食的话……勉强可以"}},
+{ dim: "生活作息", pair: "JP", q: "吃饭和遛弯的时间，{n}是？",
+a: { t: "到点就来提醒你，比闹钟还准", v: "J"}, b: { t: "随缘，你想起来才算数", v: "P"}, c: { t: "吃饭必须准时，其他都可以随缘"}},
+{ dim: "生活作息", pair: "JP", q: "{n}睡觉的地方通常是？",
+a: { t: "固定老窝，雷打不动，认床", v: "J"}, b: { t: "哪儿凉快暖和睡哪儿，全屋都是床", v: "P"}, c: { t: "离饭碗最近的地方，优先"}},
+{ dim: "生活作息", pair: "JP", q: "到了一个新环境，{n}先做什么？",
+a: { t: "先巡视一圈，确认地盘和路线", v: "J"}, b: { t: "兴奋探索，玩到哪儿算哪儿", v: "P"}, c: { t: "先找到放饭的地方，心里才踏实"}},
+{ dim: "生活作息", pair: "JP", q: "玩球的时候，{n}通常是？",
+a: { t: "捡回来放好，一套流程完整走完", v: "J"}, b: { t: "玩两下就被蝴蝶吸引走，球先放着", v: "P"}, c: { t: "玩可以，玩完必须加餐"}}
+];
+
+var DIM_LABELS = [
+{ pair: "EI", win: { E: ["E · 外向", "社交小达人"], I: ["I · 内向", "慢热观察家"]}},
+{ pair: "SN", win: { S: ["S · 实感", "鼻子侦查员"], N: ["N · 直觉", "脑洞探险家"]}},
+{ pair: "TF", win: { T: ["T · 理性", "冷静讲规则"], F: ["F · 感性", "撒娇讲感情"]}},
+{ pair: "JP", win: { J: ["J · 规律", "准时小闹钟"], P: ["P · 随性", "随缘自由派"]}}
+];
+
+/* ================= Data: products (Pawtime 清仓) ================= */
+var PRODUCTS = [
+{ name: "棋盘格项圈套装（含牵引绳）", desc: "法式棋盘格 · 软棉内衬不勒脖 · 牵引绳总长 152cm", now: "¥44.9", was: "¥77", tag: "清仓直降", art: "set"},
+{ name: "背心式胸背", desc: "反光条夜遛更安心 · 双 D 环 · 轻量不勒腋下", now: "¥49", was: "¥128", tag: "3.8 折", art: "harness"},
+{ name: "蝴蝶结项圈（可拆卸）", desc: "多巴胺配色五色可选 · 出门拍照超出片", now: "¥25.9", was: "", tag: "清仓价", art: "bow"},
+{ name: "棋盘格项圈单品", desc: "侧开安全卡扣 · 合金 D 环 · XS–XL 全尺码", now: "¥19.9", was: "", tag: "清仓价", art: "collar"}
+];
+
+function recoFor(code, hidden) {
+if (hidden) return "干饭哲学家的出门哲学也很简单：装备要舒服、不能耽误干饭。推荐棋盘格项圈套装——软棉内衬不勒脖，侧开卡扣穿脱快，出门遛一圈，回来正好赶上饭点。";
+var first = code.charAt(0), last = code.charAt(3);
+if (first === "E") return "社交型狗格出门就是全场焦点：推荐蝴蝶结项圈——多巴胺配色超出片，蝴蝶结可拆，正式卖萌、日常遛弯一键切换。";
+if (last === "P") return "随性派狗格最怕被勒着：推荐背心式胸背——护胸设计分散拉力，爆冲也不勒脖，夜遛还有反光条，自由和安全都要。";
+return "沉稳型狗格适合经典款：推荐棋盘格项圈套装——软棉内衬亲肤不粘毛，侧开卡扣穿脱快，配 152cm 牵引绳，一套搞定出门装备。";
+}
+
+/* ================= Mates / fortune helpers ================= */
+var FLIP = { E: "I", I: "E", S: "N", N: "S", T: "F", F: "T", J: "P", P: "J"};
+function oppositeCode(code) {
+var out = "";
+for (var i = 0; i < 4; i++) out += FLIP[code.charAt(i)];
+return out;
+}
+function bestMateCode(code) {
+/* 同 E/I，T/F 相反，其余两维不变 */
+return code.charAt(0) + code.charAt(1) + FLIP[code.charAt(2)] + code.charAt(3);
+}
+function starsHTML(n) {
+var s = "";
+for (var i = 1; i <= 5; i++) s += (i <= n? "★": '<span class="off">★</span>');
+return s;
+}
+var YI_POOL = ["蹭饭", "贴贴", "出门撒欢", "晒太阳", "被夸可爱", "在草地打滚", "讨零食成功", "睡个回笼觉", "交个新朋友", "巡视领地", "陪主人看剧", "捡到好闻的树叶"];
+var JI_POOL = ["洗澡", "剪指甲", "空碗见底", "雨天出门", "被没收玩具", "跟扫地机器人吵架", "被叫去减肥运动", "独自在家太久", "听主人唱歌", "被迫营业拍照"];
+function hashStr(s) {
+var h = 0;
+for (var i = 0; i < s.length; i++) { h = (h * 31 + s.charCodeAt(i)) >>> 0;}
+return h;
+}
+function fortuneFor(codeKey) {
+var d = new Date();
+var key = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate() + "|" + codeKey;
+var h = hashStr(key);
+var yi1 = YI_POOL[h % YI_POOL.length];
+var yi2 = YI_POOL[(h >> 3) % YI_POOL.length];
+if (yi2 === yi1) yi2 = YI_POOL[(h + 5) % YI_POOL.length];
+var ji = JI_POOL[(h >> 5) % JI_POOL.length];
+return { yi: [yi1, yi2], ji: ji};
+}
+
+/* ================= SVG illustration generator ================= */
+function accSVG(acc) {
+switch (acc) {
+case "balloon": return '<g><path d="M186 96 q6 26 -6 40" stroke="#c0563a" stroke-width="2.5" fill="none"/><ellipse cx="188" cy="72" rx="17" ry="22" fill="#ff6b4a"/><path d="M183 56 q6 -6 12 0" stroke="#ffb59f" stroke-width="4" fill="none" stroke-linecap="round"/></g>';
+case "medal": return '<g><path d="M104 168 l16 18 16 -18 -8 -6 -8 10 -8 -10z" fill="#ff6b4a"/><circle cx="120" cy="196" r="11" fill="#ffc53d" stroke="#e0a91e" stroke-width="2.5"/><path d="M115 196 l4 4 6 -7" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round"/></g>';
+case "bulb": return '<g><circle cx="188" cy="46" r="13" fill="#ffd94d" stroke="#e0a91e" stroke-width="2.5"/><rect x="183" y="58" width="10" height="6" rx="2" fill="#90a4ae"/><path d="M188 22 v-7 M168 30 l-5 -5 M208 30 l5 -5" stroke="#e0a91e" stroke-width="3" stroke-linecap="round"/></g>';
+case "crown": return '<g><path d="M92 52 l8 -18 12 12 8 -20 8 20 12 -12 8 18 z" fill="#ffc53d" stroke="#e0a91e" stroke-width="2.5" stroke-linejoin="round"/><circle cx="120" cy="42" r="3.5" fill="#ff6b4a"/></g>';
+case "party": return '<g><path d="M120 12 l20 36 h-40 z" fill="#ff8fab" stroke="#e56b8c" stroke-width="2.5" stroke-linejoin="round"/><circle cx="120" cy="12" r="7" fill="#ffc53d"/><circle cx="113" cy="34" r="3" fill="#fff"/><circle cx="126" cy="40" r="3" fill="#fff"/></g>';
+case "heart": return '<g><path d="M192 62 c-4 -10 -20 -10 -20 2 c0 9 10 13 20 22 c10 -9 20 -13 20 -22 c0 -12 -16 -12 -20 -2z" fill="#ff6b81"/><path d="M52 84 c-3 -7 -14 -7 -14 1 c0 6 7 9 14 15 c7 -6 14 -9 14 -15 c0 -8 -11 -8 -14 -1z" fill="#ff8fab"/></g>';
+case "shades": return '<g><rect x="84" y="88" width="30" height="18" rx="8" fill="#2e2118"/><rect x="126" y="88" width="30" height="18" rx="8" fill="#2e2118"/><path d="M114 94 h12" stroke="#2e2118" stroke-width="4"/><path d="M90 92 l12 10 M132 92 l12 10" stroke="#6f5d4c" stroke-width="3" stroke-linecap="round"/></g>';
+case "cap": return '<g><path d="M84 66 a36 20 0 0 1 72 0 z" fill="#1f9d8a"/><path d="M150 66 q26 2 30 12 q-16 4 -32 -2z" fill="#157766"/><circle cx="120" cy="47" r="5" fill="#157766"/></g>';
+case "flower": return '<g><circle cx="88" cy="52" r="7" fill="#ff8fab"/><circle cx="106" cy="42" r="7" fill="#ffc53d"/><circle cx="126" cy="40" r="7" fill="#ff8fab"/><circle cx="146" cy="46" r="7" fill="#ffb59f"/><circle cx="88" cy="52" r="2.6" fill="#fff"/><circle cx="106" cy="42" r="2.6" fill="#fff"/><circle cx="126" cy="40" r="2.6" fill="#fff"/><circle cx="146" cy="46" r="2.6" fill="#fff"/></g>';
+case "moon": return '<g><path d="M196 30 a20 20 0 1 0 12 34 a16 16 0 1 1 -12 -34z" fill="#ffd94d"/><circle cx="52" cy="44" r="2.6" fill="#f4b942"/><circle cx="66" cy="26" r="2" fill="#f4b942"/><circle cx="38" cy="66" r="2" fill="#f4b942"/></g>';
+case "magnifier": return '<g><circle cx="182" cy="120" r="17" fill="rgba(255,255,255,.35)" stroke="#5d4037" stroke-width="4"/><path d="M194 132 l14 14" stroke="#5d4037" stroke-width="6" stroke-linecap="round"/><path d="M172 110 a12 12 0 0 1 8 -6" stroke="#fff" stroke-width="3.5" fill="none" stroke-linecap="round"/></g>';
+case "glasses": return '<g><circle cx="99" cy="98" r="15" fill="rgba(255,255,255,.22)" stroke="#37474f" stroke-width="3.5"/><circle cx="141" cy="98" r="15" fill="rgba(255,255,255,.22)" stroke="#37474f" stroke-width="3.5"/><path d="M114 98 h12" stroke="#37474f" stroke-width="3.5"/></g>';
+case "palette": return '<g><ellipse cx="192" cy="150" rx="20" ry="16" fill="#d7a86e" stroke="#b9834c" stroke-width="2.5"/><circle cx="184" cy="144" r="4" fill="#ff6b4a"/><circle cx="198" cy="142" r="4" fill="#1f9d8a"/><circle cx="192" cy="155" r="4" fill="#ffc53d"/><circle cx="203" cy="152" r="3.4" fill="#ff8fab"/></g>';
+case "scarf": return '<g><path d="M84 158 q36 16 72 0 l0 14 q-36 14 -72 0z" fill="#e5502f"/><path d="M146 168 l6 26 -12 3 -4 -24z" fill="#e5502f"/><path d="M90 162 q30 12 60 0" stroke="#ffb59f" stroke-width="3" fill="none"/></g>';
+case "bandana": return '<g><path d="M84 62 a40 22 0 0 1 72 0 l0 8 a40 20 0 0 0 -72 0z" fill="#37474f"/><path d="M96 58 h6 M118 52 h6 M140 58 h6" stroke="#ffc53d" stroke-width="3" stroke-linecap="round"/></g>';
+case "tie": return '<g><path d="M114 160 h12 l-2 10 -4 26 -4 -26z" fill="#b03a2e"/><circle cx="120" cy="160" r="4.5" fill="#922b21"/></g>';
+case "bowl": return '<g><path d="M158 178 h64 l-6 22 a14 14 0 0 1 -14 10 h-24 a14 14 0 0 1 -14 -10z" fill="#e5502f"/><ellipse cx="190" cy="178" rx="32" ry="7" fill="#ff8a70"/><path d="M172 172 q6 -10 14 -3 q4 -9 12 -4 q8 -5 13 4 q7 -2 8 3z" fill="#fff6e0"/><circle cx="182" cy="166" r="3" fill="#ffd94d"/><circle cx="196" cy="163" r="3" fill="#ffd94d"/><path d="M52 60 q10 -14 24 -8 M44 84 q4 -6 10 -8" stroke="#e8a317" stroke-width="3.5" fill="none" stroke-linecap="round"/></g>';
+case "balloonParty": return '<g><path d="M120 12 l20 36 h-40 z" fill="#ff8fab" stroke="#e56b8c" stroke-width="2.5" stroke-linejoin="round"/><circle cx="120" cy="12" r="7" fill="#fff"/><circle cx="113" cy="34" r="3" fill="#fff"/><circle cx="126" cy="40" r="3" fill="#1f9d8a"/><path d="M186 96 q6 26 -6 40" stroke="#c0563a" stroke-width="2.5" fill="none"/><ellipse cx="188" cy="72" rx="17" ry="22" fill="#ff6b4a"/><path d="M183 56 q6 -6 12 0" stroke="#ffb59f" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M52 40 l3 7 7 3 -7 3 -3 7 -3 -7 -7 -3 7 -3z" fill="#ffc53d"/></g>';
+case "bulbWrench": return '<g><circle cx="188" cy="46" r="13" fill="#ffd94d" stroke="#e0a91e" stroke-width="2.5"/><rect x="183" y="58" width="10" height="6" rx="2" fill="#90a4ae"/><path d="M188 22 v-7 M168 30 l-5 -5 M208 30 l5 -5" stroke="#e0a91e" stroke-width="3" stroke-linecap="round"/><g transform="rotate(28 52 168)"><path d="M46 148 a9 9 0 1 0 9 15 l14 20 a6 6 0 0 0 10 -6 l-14 -20 a9 9 0 0 0 -6 -13 l4 8 -5 5 -8 -3z" fill="#90a4ae" stroke="#607d8b" stroke-width="2"/></g></g>';
+case "shadesSkate": return '<g><rect x="84" y="88" width="30" height="18" rx="8" fill="#2e2118"/><rect x="126" y="88" width="30" height="18" rx="8" fill="#2e2118"/><path d="M114 94 h12" stroke="#2e2118" stroke-width="4"/><path d="M90 92 l12 10 M132 92 l12 10" stroke="#6f5d4c" stroke-width="3" stroke-linecap="round"/><rect x="62" y="226" width="116" height="8" rx="4" fill="#e5502f"/><rect x="62" y="226" width="116" height="3.5" rx="1.75" fill="#ff8a70"/><circle cx="88" cy="240" r="6" fill="#37474f"/><circle cx="152" cy="240" r="6" fill="#37474f"/><circle cx="88" cy="240" r="2.4" fill="#cfd8dc"/><circle cx="152" cy="240" r="2.4" fill="#cfd8dc"/></g>';
+case "brushStar": return '<g><g transform="rotate(24 196 150)"><rect x="190" y="128" width="11" height="34" rx="4" fill="#b9834c"/><path d="M190 128 h11 l-2 -14 a3.5 3.5 0 0 0 -7 0z" fill="#ff8fab"/><rect x="190" y="124" width="11" height="5" fill="#cfd8dc"/></g><path d="M52 44 l3.5 8.5 8.5 3.5 -8.5 3.5 -3.5 8.5 -3.5 -8.5 -8.5 -3.5 8.5 -3.5z" fill="#ffd94d"/><circle cx="66" cy="86" r="3" fill="#fff"/><circle cx="42" cy="110" r="2.4" fill="#fff"/></g>';
+case "glassesBooks": return '<g><circle cx="99" cy="98" r="15" fill="rgba(255,255,255,.22)" stroke="#37474f" stroke-width="3.5"/><circle cx="141" cy="98" r="15" fill="rgba(255,255,255,.22)" stroke="#37474f" stroke-width="3.5"/><path d="M114 98 h12" stroke="#37474f" stroke-width="3.5"/><g><rect x="14" y="206" width="46" height="11" rx="2" fill="#5e548e"/><rect x="18" y="195" width="40" height="11" rx="2" fill="#9f86c0"/><rect x="15" y="184" width="44" height="11" rx="2" fill="#e0aaff"/><rect x="20" y="188" width="16" height="3" fill="rgba(255,255,255,.65)"/><rect x="23" y="199" width="14" height="3" fill="rgba(255,255,255,.65)"/></g></g>';
+case "blanketHeart": return '<g><path d="M196 58 c-4 -10 -20 -10 -20 2 c0 9 10 13 20 22 c10 -9 20 -13 20 -22 c0 -12 -16 -12 -20 -2z" fill="#ff6b81"/><path d="M50 92 c-3 -7 -14 -7 -14 1 c0 6 7 9 14 15 c7 -6 14 -9 14 -15 c0 -8 -11 -8 -14 -1z" fill="#ff8fab"/></g>';
+case "clockCalendar": return '<g><circle cx="196" cy="192" r="21" fill="#fff" stroke="#37474f" stroke-width="4"/><circle cx="182" cy="172" r="6" fill="#ffc53d" stroke="#37474f" stroke-width="2.5"/><circle cx="210" cy="172" r="6" fill="#ffc53d" stroke="#37474f" stroke-width="2.5"/><path d="M196 192 v-12 M196 192 l9 6" stroke="#37474f" stroke-width="3.5" stroke-linecap="round"/><circle cx="196" cy="192" r="3" fill="#e5502f"/><g><rect x="16" y="168" width="40" height="44" rx="4" fill="#fff" stroke="#90a4ae" stroke-width="2.5"/><rect x="16" y="168" width="40" height="12" rx="4" fill="#e5502f"/><circle cx="26" cy="192" r="2.6" fill="#b0bec5"/><circle cx="36" cy="192" r="2.6" fill="#b0bec5"/><circle cx="46" cy="192" r="2.6" fill="#ff8a70"/><circle cx="26" cy="202" r="2.6" fill="#b0bec5"/><circle cx="36" cy="202" r="2.6" fill="#ff8a70"/><circle cx="46" cy="202" r="2.6" fill="#b0bec5"/></g></g>';
+case "bowlChef": return '<g><g><ellipse cx="98" cy="34" rx="15" ry="12" fill="#fff"/><ellipse cx="120" cy="28" rx="17" ry="15" fill="#fff"/><ellipse cx="142" cy="34" rx="15" ry="12" fill="#fff"/><rect x="94" y="38" width="52" height="11" rx="4" fill="#fff" stroke="#e3ddd2" stroke-width="2"/><ellipse cx="120" cy="38" rx="26" ry="5" fill="#f4efe4"/></g><path d="M84 196 h72 l-6 24 a15 15 0 0 1 -15 11 h-30 a15 15 0 0 1 -15 -11z" fill="#e8a317"/><path d="M84 196 h72 l-2 8 h-68z" fill="#ffd94d"/><ellipse cx="120" cy="196" rx="36" ry="7" fill="#ffdf6b"/><path d="M100 190 q6 -10 14 -3 q4 -9 12 -4 q8 -5 13 4 q7 -2 8 3z" fill="#fff6e0"/><circle cx="112" cy="184" r="3" fill="#e5502f"/><circle cx="127" cy="181" r="3" fill="#e5502f"/><path d="M52 66 l3 7 7 3 -7 3 -3 7 -3 -7 -7 -3 7 -3z M196 96 l2.4 5.6 5.6 2.4 -5.6 2.4 -2.4 5.6 -2.4 -5.6 -5.6 -2.4 5.6 -2.4z" fill="#fff"/></g>';
+default: return "";
+}
+}
+
+/* Per-type art direction: accessory / palette / expression / scene */
+var TYPE_ART = {
+ENFP: { acc: "balloonParty", bg: "#ffe9a8", expr: "joy", scene: "sun"},
+ENFJ: { expr: "warm", scene: "rays"},
+ENTP: { acc: "bulbWrench", bg: "#ffe0bd", expr: "smirk", scene: "gears"},
+ENTJ: { expr: "proud", scene: "rays"},
+ESFP: { expr: "joy", scene: "notes"},
+ESFJ: { expr: "warm", scene: "hearts"},
+ESTP: { acc: "shadesSkate", bg: "#ffc9bd", expr: "cool", scene: "speed"},
+ESTJ: { expr: "serious", scene: "none"},
+INFP: { acc: "brushStar", bg: "#ded7f7", expr: "dreamy", scene: "starry"},
+INFJ: { expr: "calm", scene: "starry"},
+INTP: { expr: "curious", scene: "dots"},
+INTJ: { acc: "glassesBooks", bg: "#cfc4e8", expr: "serious", scene: "books"},
+ISFP: { expr: "dreamy", scene: "petals"},
+ISFJ: { acc: "blanketHeart", bg: "#ffe0e6", expr: "warm", scene: "hearts"},
+ISTP: { expr: "cool", scene: "none"},
+ISTJ: { acc: "clockCalendar", bg: "#d7e0ee", expr: "serious", scene: "none"}
+};
+for (var _tk in TYPE_ART) { for (var _f in TYPE_ART[_tk]) TYPES[_tk][_f] = TYPE_ART[_tk][_f];}
+HIDDEN.acc = "bowlChef"; HIDDEN.bg = "#ffe08a"; HIDDEN.expr = "content"; HIDDEN.scene = "sparkle";
+
+function sceneSVG(scene, W, H) {
+switch (scene) {
+case "sun": return '<circle cx="34" cy="34" r="17" fill="#ffd94d"/><g stroke="#f4b942" stroke-width="3.5" stroke-linecap="round"><path d="M34 6 v7 M6 34 h7 M13 13 l5 5 M55 13 l-5 5"/></g><circle cx="' + (W - 40) + '" cy="' + (H - 30) + '" r="5" fill="#ff8fab"/><circle cx="' + (W - 70) + '" cy="26" r="4" fill="#1f9d8a"/><rect x="' + (W - 96) + '" y="' + (H - 52) + '" width="7" height="7" rx="2" fill="#ff6b4a" transform="rotate(20 ' + (W - 92) + ' ' + (H - 48) + ')"/>';
+case "starry": return '<path d="M' + (W - 52) + ' 22 a19 19 0 1 0 11 33 a15 15 0 1 1 -11 -33z" fill="#ffd94d"/><path d="M40 30 l2.6 6.4 6.4 2.6 -6.4 2.6 -2.6 6.4 -2.6 -6.4 -6.4 -2.6 6.4 -2.6z" fill="#fff"/><circle cx="70" cy="66" r="2.6" fill="#fff"/><circle cx="' + (W - 90) + '" cy="70" r="2.2" fill="#fff"/><circle cx="' + (W - 34) + '" cy="' + (H - 40) + '" r="2.6" fill="#fff"/><circle cx="30" cy="' + (H - 60) + '" r="2.2" fill="#fff"/>';
+case "hearts": return '<path d="M36 40 c-3 -8 -16 -8 -16 1 c0 7 8 10 16 17 c8 -7 16 -10 16 -17 c0 -9 -13 -9 -16 -1z" fill="rgba(255,107,129,.5)"/><path d="M' + (W - 30) + ' ' + (H - 52) + ' c-2.4 -6 -12 -6 -12 1 c0 5 6 8 12 13 c6 -5 12 -8 12 -13 c0 -7 -10 -7 -12 -1z" fill="rgba(255,107,129,.4)"/>';
+case "notes": return '<g fill="#e56b8c"><ellipse cx="34" cy="52" rx="6" ry="4.5" transform="rotate(-18 34 52)"/><rect x="38" y="26" width="3.5" height="26" rx="1.5"/><path d="M38 26 q12 2 13 12 q-6 -7 -13 -7z"/><ellipse cx="' + (W - 36) + '" cy="' + (H - 44) + '" rx="6" ry="4.5" transform="rotate(-18 ' + (W - 36) + ' ' + (H - 44) + ')"/><rect x="' + (W - 32) + '" y="' + (H - 70) + '" width="3.5" height="26" rx="1.5"/></g>';
+case "speed": return '<g stroke="rgba(255,255,255,.75)" stroke-width="5" stroke-linecap="round"><path d="M8 70 h44 M4 108 h30 M' + (W - 52) + ' 88 h44 M' + (W - 34) + ' 130 h26"/></g>';
+case "sparkle": return '<path d="M38 36 l3.4 8.6 8.6 3.4 -8.6 3.4 -3.4 8.6 -3.4 -8.6 -8.6 -3.4 8.6 -3.4z" fill="#fff"/><path d="M' + (W - 44) + ' 60 l2.6 6.4 6.4 2.6 -6.4 2.6 -2.6 6.4 -2.6 -6.4 -6.4 -2.6 6.4 -2.6z" fill="#fff"/><circle cx="' + (W - 30) + '" cy="' + (H - 36) + '" r="3.4" fill="#fff"/>';
+case "gears": return '<circle cx="30" cy="' + (H - 34) + '" r="9" fill="none" stroke="rgba(255,255,255,.8)" stroke-width="4" stroke-dasharray="5 4"/><circle cx="' + (W - 34) + '" cy="34" r="6.5" fill="none" stroke="rgba(255,255,255,.8)" stroke-width="3.5" stroke-dasharray="4 3"/>';
+case "dots": return '<circle cx="32" cy="40" r="4" fill="rgba(255,255,255,.7)"/><circle cx="' + (W - 40) + '" cy="' + (H - 40) + '" r="5" fill="rgba(255,255,255,.6)"/><circle cx="' + (W - 70) + '" cy="30" r="3" fill="rgba(255,255,255,.7)"/>';
+case "petals": return '<g fill="rgba(255,143,171,.55)"><ellipse cx="34" cy="44" rx="8" ry="5" transform="rotate(-24 34 44)"/><ellipse cx="' + (W - 40) + '" cy="' + (H - 48) + '" rx="8" ry="5" transform="rotate(20 ' + (W - 40) + ' ' + (H - 48) + ')"/><ellipse cx="' + (W - 66) + '" cy="36" rx="6" ry="4" transform="rotate(-14 ' + (W - 66) + ' 36)"/></g>';
+case "rays": return '<circle cx="34" cy="36" r="13" fill="rgba(255,255,255,.5)"/><circle cx="' + (W - 36) + '" cy="' + (H - 34) + '" r="17" fill="rgba(255,255,255,.4)"/>';
+case "books": return '<circle cx="34" cy="38" r="3" fill="rgba(255,255,255,.75)"/><circle cx="' + (W - 40) + '" cy="52" r="2.6" fill="rgba(255,255,255,.75)"/><path d="M' + (W - 62) + ' 30 l2.4 6 6 2.4 -6 2.4 -2.4 6 -2.4 -6 -6 -2.4 6 -2.4z" fill="rgba(255,255,255,.8)"/>';
+default: return '<circle cx="34" cy="36" r="13" fill="rgba(255,255,255,.45)"/><circle cx="' + (W - 30) + '" cy="' + (H - 30) + '" r="17" fill="rgba(255,255,255,.38)"/>';
+}
+}
+
+function faceSVG(expr) {
+var eyes, mouth;
+switch (expr) {
+case "joy":
+eyes = '<path d="M89 103 q10 -10 20 0 M131 103 q10 -10 20 0" stroke="#2e2118" stroke-width="4" fill="none" stroke-linecap="round"/>';
+mouth = '<path d="M106 131 q14 12 28 0 q-2 15 -14 15 q-12 0 -14 -15z" fill="#7c4a2d"/><ellipse cx="120" cy="141" rx="7.5" ry="4.6" fill="#ff8fab"/>';
+break;
+case "smirk":
+eyes = '<circle cx="99" cy="102" r="5.5" fill="#2e2118"/><circle cx="141" cy="102" r="5.5" fill="#2e2118"/><circle cx="101" cy="100" r="1.8" fill="#fff"/><circle cx="143" cy="100" r="1.8" fill="#fff"/><path d="M88 90 q10 -5 20 -1 M132 89 q10 -4 19 2" stroke="#2e2118" stroke-width="3" fill="none" stroke-linecap="round"/>';
+mouth = '<path d="M110 136 q16 6 26 -8" stroke="#3a2a1e" stroke-width="3" fill="none" stroke-linecap="round"/>';
+break;
+case "dreamy":
+eyes = '<path d="M89 100 q10 -8 20 0 M131 100 q10 -8 20 0" stroke="#2e2118" stroke-width="3.6" fill="none" stroke-linecap="round"/>';
+mouth = '<path d="M112 137 q8 6 16 0" stroke="#3a2a1e" stroke-width="2.8" fill="none" stroke-linecap="round"/><circle cx="120" cy="131" r="2.2" fill="#3a2a1e"/>';
+break;
+case "content":
+eyes = '<path d="M89 100 q10 8 20 0 M131 100 q10 8 20 0" stroke="#2e2118" stroke-width="3.8" fill="none" stroke-linecap="round"/>';
+mouth = '<path d="M120 132 v5 M120 137 q-7 8 -14 3 M120 137 q7 8 14 3" stroke="#3a2a1e" stroke-width="2.8" fill="none" stroke-linecap="round"/>';
+break;
+case "serious":
+eyes = '<circle cx="99" cy="103" r="5.5" fill="#2e2118"/><circle cx="141" cy="103" r="5.5" fill="#2e2118"/><circle cx="101" cy="101" r="1.8" fill="#fff"/><circle cx="143" cy="101" r="1.8" fill="#fff"/><path d="M88 91 l20 4 M152 91 l-20 4" stroke="#2e2118" stroke-width="3.2" stroke-linecap="round"/>';
+mouth = '<path d="M111 139 q9 3 18 0" stroke="#3a2a1e" stroke-width="2.8" fill="none" stroke-linecap="round"/>';
+break;
+case "proud":
+eyes = '<circle cx="99" cy="102" r="5.5" fill="#2e2118"/><circle cx="141" cy="102" r="5.5" fill="#2e2118"/><circle cx="101" cy="100" r="1.8" fill="#fff"/><circle cx="143" cy="100" r="1.8" fill="#fff"/><path d="M88 89 q11 -6 21 -2 M131 87 q11 -4 21 2" stroke="#2e2118" stroke-width="3" fill="none" stroke-linecap="round"/>';
+mouth = '<path d="M110 137 q12 5 22 -3" stroke="#3a2a1e" stroke-width="2.8" fill="none" stroke-linecap="round"/>';
+break;
+case "curious":
+eyes = '<circle cx="99" cy="102" r="6.2" fill="#2e2118"/><circle cx="141" cy="102" r="4.8" fill="#2e2118"/><circle cx="101.5" cy="99.5" r="2" fill="#fff"/><circle cx="143" cy="100" r="1.6" fill="#fff"/><path d="M87 88 q11 -7 22 -3 M132 91 q10 -3 19 1" stroke="#2e2118" stroke-width="3" fill="none" stroke-linecap="round"/>';
+mouth = '<circle cx="121" cy="138" r="3.6" fill="none" stroke="#3a2a1e" stroke-width="2.6"/>';
+break;
+case "cool":
+eyes = '<circle cx="99" cy="102" r="5.5" fill="#2e2118"/><circle cx="141" cy="102" r="5.5" fill="#2e2118"/>';
+mouth = '<path d="M111 138 q10 4 19 -1" stroke="#3a2a1e" stroke-width="2.8" fill="none" stroke-linecap="round"/>';
+break;
+default: /* warm / calm */
+eyes = '<circle cx="99" cy="102" r="5.5" fill="#2e2118"/><circle cx="141" cy="102" r="5.5" fill="#2e2118"/><circle cx="101" cy="100" r="1.8" fill="#fff"/><circle cx="143" cy="100" r="1.8" fill="#fff"/>';
+mouth = '<path d="M120 128 v6 M120 134 q-6 7 -13 3 M120 134 q6 7 13 3" stroke="#3a2a1e" stroke-width="2.6" fill="none" stroke-linecap="round"/>';
+}
+return eyes + mouth;
+}
+
+function dogSVG(t, wide) {
+var W = wide? 360: 240, H = wide? 150: 240;
+var dx = wide? 113: 0, dy = wide? 4: 0;
+var dscale = wide? 0.56: 1;
+var ears = t.ear === "pointy"
+? '<path d="M76 78 l-8 -34 30 16z" fill="' + t.coat + '"/><path d="M164 78 l8 -34 -30 16z" fill="' + t.coat + '"/>'
+: '<ellipse cx="66" cy="104" rx="15" ry="30" fill="' + t.coat + '" transform="rotate(14 66 104)"/><ellipse cx="174" cy="104" rx="15" ry="30" fill="' + t.coat + '" transform="rotate(-14 174 104)"/>';
+var blanket = t.acc === "blanketHeart"
+? '<path d="M72 178 q48 -14 96 0 l0 34 q-48 16 -96 0z" fill="#ff8fab"/><path d="M72 186 q48 -13 96 0" stroke="#ffd6e7" stroke-width="4" fill="none"/><path d="M120 190 c-2.6 -6 -13 -6 -13 1 c0 5 6.5 8 13 13 c6.5 -5 13 -8 13 -13 c0 -7 -10.4 -7 -13 -1z" fill="#fff"/>'
+: "";
+var inner =
+'<ellipse cx="120" cy="222" rx="72" ry="10" fill="rgba(90,55,20,.12)"/>' +
+'<ellipse cx="120" cy="196" rx="54" ry="36" fill="' + t.coat + '"/>' +
+'<ellipse cx="120" cy="202" rx="30" ry="24" fill="' + t.patch + '"/>' +
+blanket + ears +
+'<circle cx="120" cy="112" r="52" fill="' + t.coat + '"/>' +
+'<ellipse cx="120" cy="130" rx="27" ry="19" fill="' + t.patch + '"/>' +
+'<ellipse cx="120" cy="121" rx="10" ry="7" fill="#3a2a1e"/>' +
+faceSVG(t.expr) +
+'<circle cx="82" cy="122" r="7" fill="rgba(255,120,120,.4)"/><circle cx="158" cy="122" r="7" fill="rgba(255,120,120,.4)"/>' +
+accSVG(t.acc);
+return '<svg viewBox="0 0 ' + W + ' ' + H + '" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="' + t.title + '插画">' +
+'<rect width="' + W + '" height="' + H + '" fill="' + t.bg + '"/>' +
+sceneSVG(t.scene, W, H) +
+'<g transform="translate(' + dx + ',' + dy + ') scale(' + dscale + ')">' + inner + '</g>' +
+'</svg>';
+}
+
+function productSVG(kind) {
+var checker = '<defs><pattern id="ck' + kind + '" width="16" height="16" patternUnits="userSpaceOnUse"><rect width="16" height="16" fill="#fdfdf8"/><rect width="8" height="8" fill="#37474f"/><rect x="8" y="8" width="8" height="8" fill="#37474f"/></pattern></defs>';
+var inner = "";
+if (kind === "set") inner = '<rect width="200" height="130" fill="#ffe9b8"/>' + checker + '<path d="M30 78 q70 34 140 0 l0 16 q-70 32 -140 0z" fill="url(#ckset)"/><rect x="88" y="98" width="24" height="18" rx="5" fill="#c9ced6" stroke="#8d99ae" stroke-width="2"/><path d="M112 84 q44 6 52 34" stroke="#e5502f" stroke-width="6" fill="none" stroke-linecap="round"/><circle cx="166" cy="120" r="7" fill="none" stroke="#8d99ae" stroke-width="3"/>';
+else if (kind === "harness") inner = '<rect width="200" height="130" fill="#cdeffb"/>' + checker + '<path d="M62 22 h76 l14 86 h-104z" fill="url(#ckharness)"/><rect x="52" y="66" width="96" height="9" fill="#ffd94d"/><circle cx="88" cy="46" r="7" fill="none" stroke="#5b6670" stroke-width="3.5"/><circle cx="112" cy="46" r="7" fill="none" stroke="#5b6670" stroke-width="3.5"/>';
+else if (kind === "bow") inner = '<rect width="200" height="130" fill="#ffd6e7"/>' + checker + '<path d="M25 62 q75 30 150 0 l0 15 q-75 28 -150 0z" fill="url(#ckbow)"/><g fill="url(#ckbow)" stroke="#37474f" stroke-width="1.5"><path d="M100 58 l-30 -14 q-4 14 0 28z"/><path d="M100 58 l30 -14 q4 14 0 28z"/></g><circle cx="100" cy="58" r="8" fill="url(#ckbow)" stroke="#37474f" stroke-width="1.5"/>';
+else inner = '<rect width="200" height="130" fill="#e6f2dd"/>' + checker + '<path d="M25 62 q75 30 150 0 l0 15 q-75 28 -150 0z" fill="url(#ckcollar)"/><rect x="88" y="76" width="24" height="17" rx="5" fill="#d7a86e" stroke="#b9834c" stroke-width="2"/><circle cx="128" cy="88" r="8" fill="none" stroke="#8d99ae" stroke-width="3.5"/>';
+return '<svg viewBox="0 0 200 130" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' + inner + '</svg>';
+}
+
+/* ================= Flow ================= */
+var $ = function (id) { return document.getElementById(id);};
+var usedCodes = {}; /* code -> result, in-memory only: one code, one test */
+var state = { name: "", code: "", idx: 0, answers: []};
+var lastResult = null;
+var lastCardSVG = null;   /* PawtimeResultCard.render 返回的 3:4 卡片 SVG 字符串 */
+var lastShareText = "";   /* 当前结果的分享文案 */
+
+function show(id) {
+var screens = document.querySelectorAll(".screen");
+for (var i = 0; i < screens.length; i++) screens[i].classList.remove("on");
+$(id).classList.add("on");
+window.scrollTo(0, 0);
+}
+function toast(msg) {
+var t = $("toast"); t.textContent = msg; t.classList.add("on");
+setTimeout(function () { t.classList.remove("on");}, 2400);
+}
+function fillName(text) { return text.split("{n}").join(state.name);}
+function escHTML(text) { return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");}
+
+/* hero + type strip */
+$("hero-art").innerHTML = '<span class="hero-dog">' + dogSVG(TYPES.ENFP) + "</span>";
+$("hero-art").firstChild.style.width = "168px";
+$("hero-art").firstChild.style.margin = "6px auto 2px";
+$("hero-art").firstChild.style.display = "block";
+var strip = "";
+var cardTypes = window.PawtimeResultCard.types;
+for (var i = 0; i < cardTypes.length; i++) {
+if (cardTypes[i].code === "HIDDEN") continue;
+strip += "<span>" + cardTypes[i].code + " " + cardTypes[i].title + "</span>";
+}
+strip += "<span>??? 干饭哲学家</span>";
+$("type-strip").innerHTML = strip;
+
+/* product grid */
+var pg = "";
+for (var j = 0; j < PRODUCTS.length; j++) {
+var p = PRODUCTS[j];
+pg += '<div class="p-card">' + productSVG(p.art) + '<div class="p-info">' +
+'<p class="p-name">' + p.name + '</p><p class="p-desc">' + p.desc + '</p>' +
+'<div class="p-price"><span class="p-now">' + p.now + "</span>" +
+(p.was? '<span class="p-was">' + p.was + "</span>": "") +
+'<span class="p-tag">' + p.tag + "</span></div></div></div>";
+}
+$("p-grid").innerHTML = pg;
+
+/* start */
+$("btn-start").addEventListener("click", function () {
+var name = $("dog-name").value.trim();
+var code = $("dog-code").value.trim().toUpperCase();
+var err = $("form-err");
+if (!name) { err.textContent = "先填一下狗狗的名字吧，它值得拥有姓名。"; err.classList.add("on"); return;}
+if (!code) { err.textContent = "请输入测试口令（下单后在客服消息里查收）。"; err.classList.add("on"); return;}
+err.classList.remove("on");
+state.name = name; state.code = code;
+if (usedCodes[code]) { renderResult(usedCodes[code], true); return;}
+state.idx = 0; state.answers = [];
+renderQ();
+show("scr-quiz");
+});
+
+function cCountSoFar() {
+var n = 0;
+for (var i = 0; i < state.answers.length; i++) if (state.answers[i] === "C") n++;
+return n;
+}
+
+function renderQ() {
+var q = QUESTIONS[state.idx];
+$("q-num").textContent = state.idx + 1;
+var pct = Math.round(state.idx / QUESTIONS.length * 100);
+$("q-bone-fill").style.width = pct + "%";
+$("q-bone-emoji").style.left = "calc(" + pct + "%)";
+$("q-bone-pct").textContent = pct + "%";
+var cc = cCountSoFar();
+$("q-c-hint").textContent = cc > 0? "干饭选项已选 " + cc + " 次": "";
+$("q-dim").textContent = "维度 · " + q.dim;
+$("q-text").textContent = fillName(q.q);
+$("q-opts").innerHTML =
+'<button class="opt-btn" type="button" data-v="A"><span class="ab">A</span>' + escHTML(fillName(q.a.t)) + "</button>" +
+'<button class="opt-btn" type="button" data-v="B"><span class="ab">B</span>' + escHTML(fillName(q.b.t)) + "</button>" +
+'<button class="opt-btn opt-c" type="button" data-v="C"><span class="ab">C</span>' + escHTML(fillName(q.c.t)) + '<span class="c-tag">干饭路线</span></button>';
+var btns = $("q-opts").querySelectorAll(".opt-btn");
+for (var i = 0; i < btns.length; i++) {
+btns[i].addEventListener("click", function () {
+state.answers[state.idx] = this.getAttribute("data-v");
+state.idx++;
+if (state.idx >= QUESTIONS.length) finish();
+else renderQ();
+});
+}
+$("q-back").style.visibility = state.idx === 0? "hidden": "visible";
+}
+$("q-back").addEventListener("click", function () {
+if (state.idx > 0) { state.idx--; renderQ();}
+});
+
+function finish() {
+show("scr-calc");
+var steps = ["正在分析狗格中…", "翻一翻它的小心思…", "看看它选了多少次干饭…", "马上就好啦…"];
+var s = 0;
+var timer = setInterval(function () {
+s++;
+if (s < steps.length) $("calc-text").textContent = steps[s];
+}, 500);
+setTimeout(function () {
+clearInterval(timer);
+var scores = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0};
+var cCount = 0;
+for (var i = 0; i < QUESTIONS.length; i++) {
+var q = QUESTIONS[i], ans = state.answers[i];
+if (ans === "A") scores[q.a.v] += 2;
+else if (ans === "B") scores[q.b.v] += 2;
+else { scores[q.a.v] += 1; scores[q.b.v] += 1; cCount++;}
+}
+var code = (scores.E >= scores.I? "E": "I") + (scores.S >= scores.N? "S": "N") +
+(scores.T >= scores.F? "T": "F") + (scores.J >= scores.P? "J": "P");
+var result = { name: state.name, code: code, scores: scores, cCount: cCount, hidden: cCount >= 10};
+usedCodes[state.code] = result;
+renderResult(result, false);
+}, 2100);
+}
+
+/* Card data helpers: 类型名 / 发言 / 标签以 PawtimeResultCard 内 DOGS 为准 */
+function cardTypeOf(code) {
+var list = window.PawtimeResultCard.types;
+for (var i = 0; i < list.length; i++) if (list[i].code === code) return list[i];
+return null;
+}
+function cardTitleOf(code) { var d = cardTypeOf(code); return d? d.title: "";}
+
+function renderResult(r, fromLock) {
+lastResult = r;
+/* 四维胜出极百分比，与类型代码四个字母一一对应 */
+var pcts = [];
+for (var d = 0; d < DIM_LABELS.length; d++) {
+var pair = DIM_LABELS[d].pair, x = pair.charAt(0), y = pair.charAt(1);
+var win = r.scores[x] >= r.scores[y]? x: y;
+var total = r.scores[x] + r.scores[y];
+pcts.push(total? Math.round(r.scores[win] / total * 100): 50);
+}
+var f = fortuneFor(r.hidden? "HIDDEN": r.code);
+var fortuneStr = "宜：" + f.yi.join("、") + "　忌：" + f.ji;
+var cardCode, bestStr, rivalStr, rarity, shareText;
+if (r.hidden) {
+var h = HIDDEN, hc = cardTypeOf("HIDDEN");
+cardCode = "HIDDEN"; rarity = 5;
+bestStr = "所有手里有零食的人和狗"; rivalStr = "空饭碗";
+var htags = "";
+for (var k = 0; k < hc.tags.length; k++) htags += "<span>#" + hc.tags[k] + "</span>";
+htags += "<span>#干饭选项选了 " + r.cCount + " 次</span>";
+$("d-tags").innerHTML = htags;
+$("d-desc").textContent = hc.line + " " + h.desc.split("{n}").join(r.name);
+$("d-mates").innerHTML = "<h4>趣味稀有度</h4>" +
+'<p class="mate-row">稀有度 · 趣味评级 <span class="stars" style="color:#e8a317;letter-spacing:2px">' + starsHTML(5) + '</span> 隐藏款，不计入 16 型</p>' +
+"<h4>最佳拍档</h4>" +
+'<p class="mate-row">它的最佳拍档不是某种狗格，而是<b>所有手里有零食的人和狗</b>——谁给它加餐，谁就是它异父异母的亲兄弟。</p>' +
+'<p class="mate-row">欢喜冤家是<b>空饭碗</b>：一天要确认八百遍，见一次叹一次气。</p>';
+shareText = "我家" + r.name + "测出来是【隐藏款 " + hc.title + "】！你家狗是哪种狗格？快来测测 #狗格测试 #狗狗MBTI";
+} else {
+var t = TYPES[r.code], tc = cardTypeOf(r.code);
+var opp = oppositeCode(r.code), best = bestMateCode(r.code);
+cardCode = r.code; rarity = t.rare;
+bestStr = best + " " + cardTitleOf(best);
+rivalStr = opp + " " + cardTitleOf(opp);
+var tags = "";
+for (var k2 = 0; k2 < tc.tags.length; k2++) tags += "<span>#" + tc.tags[k2] + "</span>";
+$("d-tags").innerHTML = tags;
+$("d-desc").textContent = tc.line + " " + t.desc.split("{n}").join(r.name);
+$("d-mates").innerHTML = "<h4>趣味稀有度</h4>" +
+'<p class="mate-row">稀有度 · 趣味评级 <span class="stars" style="color:#e8a317;letter-spacing:2px">' + starsHTML(t.rare) + '</span> ' + t.rare + ' / 5 星</p>' +
+"<h4>最佳拍档 &amp; 欢喜冤家</h4>" +
+'<p class="mate-row">最佳拍档 <span class="mate-code">' + best + '</span> <b>「' + cardTitleOf(best) + '」</b>：社交节奏同频、做决定一个理性一个感性，正好互补——一个出主意，一个暖场子，组队出门（和干饭）都比别人香。</p>' +
+'<p class="mate-row">欢喜冤家 <span class="mate-code">' + opp + '</span> <b>「' + cardTitleOf(opp) + '」</b>：四个维度全相反，凑一起就是大型互补现场，一个负责热闹、一个负责收场，吵吵闹闹却最长久。</p>';
+shareText = "我家" + r.name + "测出来是【" + r.code + " " + tc.title + "】！你家狗是哪种狗格？快来测测 #狗格测试 #狗狗MBTI";
+}
+lastCardSVG = window.PawtimeResultCard.render(cardCode, {
+name: r.name, scores: pcts, best: bestStr, rival: rivalStr, fortune: fortuneStr, rarity: rarity
+});
+$("poster-card").innerHTML = lastCardSVG;
+lastShareText = shareText;
+$("shop-title").textContent = "给" + r.name + "挑件出门装备";
+$("reco-text").textContent = recoFor(r.code, r.hidden);
+$("locked-note").textContent = fromLock
+? "这个口令已经测过啦，上面是" + r.name + "的结果海报。想再测一只，换个新口令就行。"
+: "本次测试已完成，口令已锁定：下次用同一口令打开，会直接看到这张海报。";
+show("scr-result");
+}
+
+/* copy share text */
+$("btn-copy").addEventListener("click", function () {
+if (!lastResult) return;
+var text = lastShareText;
+function done() { toast("分享文案已复制，去粘贴给朋友吧");}
+function fail() { toast("复制没成功，长按这段话手动复制：" + text);}
+if (navigator.clipboard && navigator.clipboard.writeText) {
+navigator.clipboard.writeText(text).then(done).catch(function () { legacyCopy(text)? done(): fail();});
+} else { legacyCopy(text)? done(): fail();}
+});
+function legacyCopy(text) {
+try {
+var ta = document.createElement("textarea");
+ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+document.body.appendChild(ta); ta.select();
+var ok = document.execCommand("copy");
+document.body.removeChild(ta);
+return ok;
+} catch (e) { return false;}
+}
+
+/* save poster: serialize the card SVG and export a 1080x1440 PNG, then pop it full-screen */
+var lastPosterURL = null;
+function renderPosterPNG(ok, fail) {
+if (!lastCardSVG) { fail(); return;}
+try {
+var blob = new Blob([lastCardSVG], { type: "image/svg+xml;charset=utf-8"});
+var url = URL.createObjectURL(blob);
+var img = new Image();
+img.onload = function () {
+try {
+var canvas = document.createElement("canvas");
+canvas.width = 1080; canvas.height = 1440;
+var ctx = canvas.getContext("2d");
+ctx.fillStyle = "#fff9ee"; ctx.fillRect(0, 0, 1080, 1440);
+ctx.drawImage(img, 0, 0, 1080, 1440);
+URL.revokeObjectURL(url);
+lastPosterURL = canvas.toDataURL("image/png");
+ok(lastPosterURL);
+} catch (e) { URL.revokeObjectURL(url); fail();}
+};
+img.onerror = function () { URL.revokeObjectURL(url); fail();};
+img.src = url;
+} catch (e) { fail();}
+}
+function openImgModal(url) {
+$("modal-img").src = url;
+var dl = $("btn-download");
+dl.href = url;
+dl.setAttribute("download", "狗格测试-结果海报.png");
+$("img-modal").classList.add("on");
+}
+function renderFail() { toast("海报生成失败，长按页面截图保存也一样好看");}
+
+$("btn-save").addEventListener("click", function () {
+toast("正在生成高清海报…");
+renderPosterPNG(openImgModal, renderFail);
+});
+
+/* share to Xiaohongshu: pop the poster image + copy the caption (two honest steps) */
+$("btn-share").addEventListener("click", function () {
+if (!lastResult) return;
+var text = lastShareText;
+function copied() { toast("文案已复制，保存图片后去小红书粘贴发布");}
+if (navigator.clipboard && navigator.clipboard.writeText) {
+navigator.clipboard.writeText(text).then(copied).catch(function () { if (legacyCopy(text)) copied();});
+} else if (legacyCopy(text)) { copied();}
+toast("正在生成高清海报…");
+renderPosterPNG(openImgModal, renderFail);
+});
+
+$("btn-modal-close").addEventListener("click", function () {
+$("img-modal").classList.remove("on");
+});
+$("img-modal").addEventListener("click", function (e) {
+if (e.target === this) this.classList.remove("on");
+});
+
+/* again */
+$("btn-again").addEventListener("click", function () {
+$("dog-name").value = "";
+$("dog-code").value = "";
+show("scr-home");
+});
+</script>
+</body>
+</html>
